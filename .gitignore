@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+*.local
+
+# Env — never commit secrets
+.env
+.env.*
+!.env.example
+
+# Generated dashboard snapshot (CI regenerates each deploy)
+public/data/dashboard.json
+
+# Local prototype (reference only; not part of the SPA)
+prototype/
+
+# Editor / OS
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# npm lockfile — this repo uses pnpm
+package-lock.json
+
+# TypeScript
+*.tsbuildinfo
