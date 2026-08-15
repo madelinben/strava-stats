@@ -45,7 +45,7 @@ pnpm run dev
 | Credentials | Never in git, never `VITE_*`, never in the SPA bundle |
 | Strava API | Only `scripts/sync.ts` in CI/local — max ~1 run/day |
 | Rate limits | 429 → short backoff then abort (no retry storm) |
-| TanStack Query | 24h `staleTime`/`gcTime`, no refetch on focus/reconnect/mount, `sessionStorage` persist |
+| TanStack Query | 24h client cache of static JSON; cron writes `version.json` so each deploy busts sessionStorage (no Pages revalidate API) |
 | Prototype | `prototype/` is gitignored (local reference only) |
 
 ## Scripts
@@ -53,7 +53,7 @@ pnpm run dev
 | Command | Purpose |
 | --- | --- |
 | `pnpm run auth` | One-time OAuth; print refresh token |
-| `pnpm run sync` | Fetch Strava → reduce stats → `public/data/dashboard.json` |
+| `pnpm run sync` | Fetch Strava → reduce stats → `dashboard.json` + `version.json` (cache buster) |
 | `pnpm run parkruns:update` | Refresh hardcoded UK/IE parkrun lat/lng list (free, no key) |
 | `pnpm run dev` | Vite dev server |
 | `pnpm run build` | Production build (`base: /strava-stats/`) |

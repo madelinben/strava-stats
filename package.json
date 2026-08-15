@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "sync": "tsx scripts/sync.ts",
     "auth": "tsx scripts/auth.ts",
-    "seed": "cp public/data/dashboard.sample.json public/data/dashboard.json",
+    "seed": "tsx scripts/seed.ts",
     "parkruns:update": "tsx scripts/update-parkruns.ts",
     "typecheck": "tsc -b --noEmit"
   },

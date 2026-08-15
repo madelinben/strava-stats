@@ -21,6 +21,7 @@ config();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_PATH = join(ROOT, 'public', 'data', 'dashboard.json');
+const VERSION_PATH = join(ROOT, 'public', 'data', 'version.json');
 const ENV_PATH = join(ROOT, '.env');
 
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID;
@@ -233,7 +234,22 @@ async function main(): Promise<void> {
   const dashboard = buildDashboard(athlete, activities, effortSources);
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, JSON.stringify(dashboard, null, 2), 'utf8');
+  // Cache buster for the SPA — PersistQueryClient uses this as `buster` so a
+  // successful cron/deploy drops stale sessionStorage (no server revalidate API on Pages).
+  writeFileSync(
+    VERSION_PATH,
+    JSON.stringify(
+      {
+        generatedAt: dashboard.generatedAt,
+        source: 'strava-sync',
+      },
+      null,
+      2,
+    ) + '\n',
+    'utf8',
+  );
   console.log(`Wrote ${OUT_PATH}`);
+  console.log(`Wrote ${VERSION_PATH} (cache buster ${dashboard.generatedAt})`);
   console.log(
     `Summary: ${dashboard.summary.activities} activities · ${dashboard.summary.runDistanceKm} km run`,
   );
