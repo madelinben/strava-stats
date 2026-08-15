@@ -36,7 +36,7 @@ pnpm run dev
    - `STRAVA_REFRESH_TOKEN` (from `pnpm run auth`)
    - `SECRETS_PAT` — fine-grained personal access token with **Secrets: Read and write** on this repo (Strava rotates refresh tokens; the sync job writes the new value back)
 3. Push to `master` or run **Actions → Sync & Deploy Pages → Run workflow**.
-4. Cron runs daily at 06:00 UTC.
+4. Cron runs daily at 10:00 UTC (after Saturday 9am parkrun).
 
 ## Guardrails
 

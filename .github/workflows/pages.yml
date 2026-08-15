@@ -2,8 +2,8 @@ name: Sync & Deploy Pages
 
 on:
   schedule:
-    # Once per day at 06:00 UTC — only Strava touchpoint
-    - cron: '0 6 * * *'
+    # Once per day at 10:00 UTC — after Saturday 9am parkrun (UK)
+    - cron: '0 10 * * *'
   workflow_dispatch:
   push:
     branches: [master]
