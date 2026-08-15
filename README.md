@@ -54,6 +54,7 @@ pnpm run dev
 | --- | --- |
 | `pnpm run auth` | One-time OAuth; print refresh token |
 | `pnpm run sync` | Fetch Strava → reduce stats → `public/data/dashboard.json` |
+| `pnpm run parkruns:update` | Refresh hardcoded UK/IE parkrun lat/lng list (free, no key) |
 | `pnpm run dev` | Vite dev server |
 | `pnpm run build` | Production build (`base: /strava-stats/`) |
 

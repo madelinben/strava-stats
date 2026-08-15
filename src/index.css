@@ -384,9 +384,186 @@ footer {
   margin-bottom: 8px;
 }
 
+.alphabeteer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.btn-location {
+  appearance: none;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-location:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.btn-location:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.alphabeteer-origin {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin: 0 0 14px;
+}
+
+.alphabeteer-warn {
+  color: #791f1f;
+}
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.letter-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.letter-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.letter-legend .legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.letter-btn {
+  appearance: none;
+  border: 1px solid transparent;
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.letter-btn.letter-done,
+.legend-swatch.letter-done {
+  background: #10b981;
+  color: #fff;
+}
+
+.letter-btn.letter-todo,
+.legend-swatch.letter-todo {
+  background: #ef4444;
+  color: #fff;
+}
+
+.letter-btn.letter-abroad,
+.legend-swatch.letter-abroad {
+  background: #eab308;
+  color: #1c1c1a;
+}
+
+.letter-btn.is-active {
+  outline: 2px solid #1c1c1a;
+  outline-offset: 2px;
+}
+
+.alphabeteer-done-box {
+  background: var(--met-bg);
+  border: 1px solid #b6e5d3;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.letter-btn:hover {
+  filter: brightness(1.05);
+}
+
+.alphabeteer-letter-heading {
+  margin-bottom: 10px;
+}
+
+.alphabeteer-letter-heading span {
+  color: var(--accent);
+}
+
+.alphabeteer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.alphabeteer-list li {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.alphabeteer-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.alphabeteer-rank {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff7f0;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 13px;
+  display: grid;
+  place-items: center;
+}
+
+.alphabeteer-meta a {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.alphabeteer-meta a:hover {
+  color: var(--accent);
+}
+
+.alphabeteer-dist {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--run);
+  white-space: nowrap;
+}
+
 @media (max-width: 640px) {
   header.hero {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .letter-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 }

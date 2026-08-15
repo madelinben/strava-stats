@@ -7,6 +7,7 @@ import { GroupCards } from './components/GroupCards';
 import { ActivityMap } from './components/ActivityMap';
 import { TrainingPlan } from './components/TrainingPlan';
 import { ComplianceCard } from './components/ComplianceCard';
+import { AlphabeteerFinder } from './components/AlphabeteerFinder';
 
 const SPORT_COLORS = {
   Run: '#10b981',
@@ -120,6 +121,10 @@ export default function App() {
             {data.running.shoeWear.lifeKm} km road shoe lifespan as a proxy. Link a
             shoe in Strava gear settings for an exact reading.
           </p>
+        </div>
+
+        <div style={{ marginTop: 14 }}>
+          <AlphabeteerFinder runPoints={data.runPoints} />
         </div>
       </section>
 
