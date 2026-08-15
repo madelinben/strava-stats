@@ -103,6 +103,13 @@ h3 {
   font-weight: 600;
 }
 
+.stat-pace {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 4px;
+}
+
 .stat-sub {
   font-size: 12px;
   color: var(--text-muted);

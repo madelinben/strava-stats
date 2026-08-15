@@ -10,7 +10,12 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
 import { buildDashboard } from '../src/lib/stats';
-import type { StravaActivitySummary, StravaAthlete } from '../src/types';
+import type {
+  ActivityEffortSource,
+  StravaActivitySummary,
+  StravaAthlete,
+  StravaBestEffort,
+} from '../src/types';
 
 config();
 
@@ -25,6 +30,8 @@ let refreshToken = process.env.STRAVA_REFRESH_TOKEN;
 const MAX_PAGES = 40;
 const PER_PAGE = 100;
 const MAX_429_RETRIES = 3;
+/** Min run distance to bother fetching detail for best efforts (5k). */
+const MIN_EFFORT_DISTANCE_M = 5000;
 
 function requireCreds(): void {
   if (!CLIENT_ID || !CLIENT_SECRET || !refreshToken) {
@@ -151,6 +158,61 @@ async function fetchAllActivities(accessToken: string): Promise<StravaActivitySu
   return all;
 }
 
+function isRunActivity(a: StravaActivitySummary): boolean {
+  const t = a.sport_type ?? a.type;
+  return t === 'Run' || t === 'TrailRun' || t === 'VirtualRun';
+}
+
+/**
+ * Detailed activity fetch — only source of Strava best_efforts (exact distance times).
+ * Limited to runs long enough to contain a 5k+ effort; paced to respect rate limits.
+ */
+async function fetchRunBestEfforts(
+  accessToken: string,
+  activities: StravaActivitySummary[],
+): Promise<ActivityEffortSource[]> {
+  const runs = activities.filter(
+    (a) => isRunActivity(a) && a.distance >= MIN_EFFORT_DISTANCE_M,
+  );
+  console.log(
+    `Fetching best efforts for ${runs.length} runs (≥ ${MIN_EFFORT_DISTANCE_M} m)…`,
+  );
+  const sources: ActivityEffortSource[] = [];
+
+  for (let i = 0; i < runs.length; i++) {
+    const run = runs[i];
+    const res = await stravaFetch(
+      `https://www.strava.com/api/v3/activities/${run.id}`,
+      accessToken,
+    );
+    if (!res.ok) {
+      console.warn(
+        `Skip activity ${run.id} (${res.status}): ${run.name}`,
+      );
+      await sleep(200);
+      continue;
+    }
+    const detail = (await res.json()) as {
+      id: number;
+      name: string;
+      start_date_local: string;
+      best_efforts?: StravaBestEffort[];
+    };
+    sources.push({
+      id: detail.id,
+      name: detail.name,
+      start_date_local: detail.start_date_local,
+      best_efforts: detail.best_efforts ?? [],
+    });
+    if ((i + 1) % 10 === 0 || i === runs.length - 1) {
+      console.log(`  best efforts ${i + 1}/${runs.length}`);
+    }
+    await sleep(200);
+  }
+
+  return sources;
+}
+
 async function main(): Promise<void> {
   requireCreds();
   console.log('Refreshing Strava access token…');
@@ -163,13 +225,21 @@ async function main(): Promise<void> {
   console.log('Fetching activities…');
   const activities = await fetchAllActivities(tokens.access_token);
 
-  const dashboard = buildDashboard(athlete, activities);
+  const effortSources = await fetchRunBestEfforts(
+    tokens.access_token,
+    activities,
+  );
+
+  const dashboard = buildDashboard(athlete, activities, effortSources);
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, JSON.stringify(dashboard, null, 2), 'utf8');
   console.log(`Wrote ${OUT_PATH}`);
   console.log(
     `Summary: ${dashboard.summary.activities} activities · ${dashboard.summary.runDistanceKm} km run`,
   );
+  for (const pb of dashboard.running.distancePbs) {
+    console.log(`  ${pb.label}: ${pb.value} (${pb.pace})`);
+  }
 }
 
 main().catch((err) => {

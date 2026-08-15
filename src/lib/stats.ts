@@ -7,7 +7,9 @@ import {
 } from '../data/trainingPlan';
 import { computeWeeklyCompliance } from './compliance';
 import type {
+  ActivityEffortSource,
   DashboardData,
+  DistanceEffort,
   GroupStats,
   HeatDay,
   MapPoint,
@@ -15,6 +17,7 @@ import type {
   StatHighlight,
   StravaActivitySummary,
   StravaAthlete,
+  StravaBestEffort,
 } from '../types';
 
 const GROUP_DEFS = [
@@ -47,13 +50,6 @@ function metresToKm(m: number): number {
 
 function formatKm(m: number, digits = 2): string {
   return `${metresToKm(m).toFixed(digits)} km`;
-}
-
-function formatDuration(seconds: number): string {
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m`;
-  return `${m}m`;
 }
 
 function formatDurationLong(seconds: number): string {
@@ -130,39 +126,112 @@ function buildGroupStats(runs: StravaActivitySummary[]): GroupStats[] {
   });
 }
 
-function best5k(runs: StravaActivitySummary[]): StatHighlight {
-  // ~5k ± 8%
-  const candidates = runs.filter((a) => {
-    const k = metresToKm(a.distance);
-    return k >= 4.6 && k <= 5.4;
-  });
-  if (!candidates.length) {
-    return { value: '—', sub: 'No 5k-distance runs logged' };
+/** Race clock time: m:ss or h:mm:ss */
+function formatRaceTime(seconds: number): string {
+  const total = Math.max(0, Math.round(seconds));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
-  const best = candidates.reduce((a, b) =>
-    a.average_speed >= b.average_speed ? a : b,
-  );
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+const DISTANCE_PB_TARGETS: Array<{
+  id: string;
+  label: string;
+  /** Exact race distance in metres (for pace). */
+  distanceM: number;
+  /** Strava best_efforts[].name values (case-insensitive). */
+  effortNames: string[];
+}> = [
+  { id: '5k', label: 'Quickest 5k', distanceM: 5000, effortNames: ['5k'] },
+  { id: '10k', label: 'Quickest 10k', distanceM: 10000, effortNames: ['10k'] },
+  {
+    id: '10mile',
+    label: 'Quickest 10 mile',
+    distanceM: 16093.44,
+    effortNames: ['10 mile', '10mile'],
+  },
+  {
+    id: 'half',
+    label: 'Quickest half marathon',
+    distanceM: 21097.5,
+    effortNames: ['half-marathon', 'half marathon'],
+  },
+  {
+    id: 'marathon',
+    label: 'Quickest marathon',
+    distanceM: 42195,
+    effortNames: ['marathon'],
+  },
+];
+
+function normalizeEffortName(name: string): string {
+  return name.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function effortSeconds(effort: StravaBestEffort): number {
+  // Strava's Best Efforts UI uses elapsed time for the exact distance segment
+  return effort.elapsed_time > 0 ? effort.elapsed_time : effort.moving_time;
+}
+
+function bestStravaEffort(
+  sources: ActivityEffortSource[],
+  id: string,
+  label: string,
+  distanceM: number,
+  effortNames: string[],
+): DistanceEffort {
+  const wanted = new Set(effortNames.map(normalizeEffortName));
+  let best: {
+    seconds: number;
+    distance: number;
+    activityName: string;
+    date: string;
+  } | null = null;
+
+  for (const activity of sources) {
+    for (const effort of activity.best_efforts ?? []) {
+      if (!wanted.has(normalizeEffortName(effort.name))) continue;
+      const seconds = effortSeconds(effort);
+      if (seconds <= 0) continue;
+      if (!best || seconds < best.seconds) {
+        best = {
+          seconds,
+          distance: effort.distance > 0 ? effort.distance : distanceM,
+          activityName: activity.name,
+          date: activity.start_date_local,
+        };
+      }
+    }
+  }
+
+  if (!best) {
+    return {
+      id,
+      label,
+      value: '—',
+      pace: '—',
+      sub: 'No Strava best effort at this distance yet',
+    };
+  }
+
+  const speed = best.distance / best.seconds;
   return {
-    value: `${pacePerKm(best.average_speed)} /km`,
-    sub: `${best.name} · ${formatDuration(best.moving_time)} · ${formatShortDate(best.start_date_local)}`,
+    id,
+    label,
+    value: formatRaceTime(best.seconds),
+    pace: `${pacePerKm(speed)} /km`,
+    sub: `${best.activityName} · ${formatShortDate(best.date)}`,
   };
 }
 
-function best10k(runs: StravaActivitySummary[]): StatHighlight {
-  const candidates = runs.filter((a) => {
-    const k = metresToKm(a.distance);
-    return k >= 9.4 && k <= 10.6;
-  });
-  if (!candidates.length) {
-    return { value: '—', sub: 'No 10k-distance runs logged' };
-  }
-  const best = candidates.reduce((a, b) =>
-    a.average_speed >= b.average_speed ? a : b,
+function distancePbs(sources: ActivityEffortSource[]): DistanceEffort[] {
+  return DISTANCE_PB_TARGETS.map((t) =>
+    bestStravaEffort(sources, t.id, t.label, t.distanceM, t.effortNames),
   );
-  return {
-    value: `${pacePerKm(best.average_speed)} /km`,
-    sub: `${best.name} · ${formatDuration(best.moving_time)} · ${formatShortDate(best.start_date_local)}`,
-  };
 }
 
 function furthest(activities: StravaActivitySummary[]): StatHighlight {
@@ -235,6 +304,7 @@ function dateRangeLabel(activities: StravaActivitySummary[]): string {
 export function buildDashboard(
   athlete: StravaAthlete,
   activities: StravaActivitySummary[],
+  effortSources: ActivityEffortSource[] = [],
   now: Date = new Date(),
 ): DashboardData {
   const runs = activities.filter(isRun);
@@ -284,8 +354,7 @@ export function buildDashboard(
     heatmap,
     running: {
       furthest: furthest(runs),
-      quickest5k: best5k(runs),
-      quickest10k: best10k(runs),
+      distancePbs: distancePbs(effortSources),
       totalTime: {
         value: formatDurationLong(runTime),
         sub: `Across ${runs.length} runs · ${formatKm(runDistance, 1)} total`,

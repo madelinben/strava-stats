@@ -24,6 +24,17 @@ export interface StatHighlight {
   sub: string;
 }
 
+/** Best effort at a standard race distance — time highlighted, pace secondary. */
+export interface DistanceEffort {
+  id: string;
+  label: string;
+  /** Finish time, e.g. 24:57 or 1:57:10 */
+  value: string;
+  /** Average pace, e.g. 4:57 /km */
+  pace: string;
+  sub: string;
+}
+
 export interface GroupStats {
   id: string;
   name: string;
@@ -93,8 +104,7 @@ export interface DashboardData {
   heatmap: HeatDay[];
   running: {
     furthest: StatHighlight;
-    quickest5k: StatHighlight;
-    quickest10k: StatHighlight;
+    distancePbs: DistanceEffort[];
     totalTime: StatHighlight;
     shoeWear: {
       loggedKm: number;
@@ -147,4 +157,20 @@ export interface StravaAthlete {
   city?: string | null;
   state?: string | null;
   country?: string | null;
+}
+
+/** One Strava best-effort segment from a detailed activity. */
+export interface StravaBestEffort {
+  name: string;
+  distance: number;
+  moving_time: number;
+  elapsed_time: number;
+}
+
+/** Activity + its Strava best_efforts (from GET /activities/{id}). */
+export interface ActivityEffortSource {
+  id: number;
+  name: string;
+  start_date_local: string;
+  best_efforts: StravaBestEffort[];
 }

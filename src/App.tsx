@@ -78,20 +78,19 @@ export default function App() {
       <section id="running-stats">
         <h2>Running stats</h2>
         <div className="grid grid-3" style={{ marginBottom: 14 }}>
+          {(data.running.distancePbs ?? []).map((pb) => (
+            <StatCard
+              key={pb.id}
+              label={pb.label}
+              value={pb.value}
+              pace={pb.pace !== '—' ? pb.pace : undefined}
+              sub={pb.sub}
+            />
+          ))}
           <StatCard
             label="Furthest run"
             value={data.running.furthest.value}
             sub={data.running.furthest.sub}
-          />
-          <StatCard
-            label="Quickest 5k"
-            value={data.running.quickest5k.value}
-            sub={data.running.quickest5k.sub}
-          />
-          <StatCard
-            label="Quickest 10k"
-            value={data.running.quickest10k.value}
-            sub={data.running.quickest10k.sub}
           />
           <StatCard
             label="Total time running"
