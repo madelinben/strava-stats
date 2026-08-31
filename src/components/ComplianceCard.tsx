@@ -1,20 +1,10 @@
 import type { ComplianceStatus, WeeklyCompliance } from '../types';
 
-function statusClass(status: ComplianceStatus): string {
-  switch (status) {
-    case 'met':
-      return 'status-met';
-    case 'partial':
-      return 'status-partial';
-    case 'missed':
-      return 'status-missed';
-    case 'pending':
-      return 'status-pending';
-    default: {
-      const _exhaustive: never = status;
-      return _exhaustive;
-    }
-  }
+/** Tick for met, cross for missed, dash for partial/pending (not yet decided). */
+function StatusIcon({ status }: { status: ComplianceStatus }) {
+  if (status === 'met') return <span className="status-icon status-icon-met">✓</span>;
+  if (status === 'missed') return <span className="status-icon status-icon-missed">✕</span>;
+  return <span className="status-icon status-icon-neutral">–</span>;
 }
 
 export function ComplianceCard({ compliance }: { compliance: WeeklyCompliance }) {
@@ -25,8 +15,8 @@ export function ComplianceCard({ compliance }: { compliance: WeeklyCompliance })
         {compliance.phaseName}
       </h3>
       <p className="muted" style={{ marginTop: 0, marginBottom: 14 }}>
-        {compliance.weekStart} → {compliance.weekEnd} · checked against the scripted
-        Liverpool Half plan (no AI)
+        {compliance.weekStart} → {compliance.weekEnd} · checked against your training
+        plan (no AI) · recalculated on every sync
       </p>
       <table className="plan">
         <thead>
@@ -44,9 +34,7 @@ export function ComplianceCard({ compliance }: { compliance: WeeklyCompliance })
               <td>{rule.expected}</td>
               <td>{rule.actual}</td>
               <td>
-                <span className={`status-pill ${statusClass(rule.status)}`}>
-                  {rule.status}
-                </span>
+                <StatusIcon status={rule.status} />
               </td>
             </tr>
           ))}

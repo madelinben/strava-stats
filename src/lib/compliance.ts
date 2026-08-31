@@ -1,10 +1,5 @@
-import {
-  LONG_RUN_KM_BY_WEEK,
-  formatIsoDate,
-  planWeekNumber,
-  rulesForWeek,
-  startOfMonday,
-} from '../data/trainingPlan';
+import { formatIsoDate, startOfMonday } from './dates';
+import { currentWeekNumber, rulesForWeek, type GeneratedPlan } from './trainingPlan';
 import type {
   ComplianceRule,
   ComplianceStatus,
@@ -51,16 +46,35 @@ function statusFrom(met: boolean, partial: boolean, weekComplete: boolean): Comp
 
 export function computeWeeklyCompliance(
   activities: StravaActivitySummary[],
+  plan: GeneratedPlan | null,
   now: Date = new Date(),
 ): WeeklyCompliance {
   const weekStart = startOfMonday(now);
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekEnd.getDate() + 6);
-
-  const weekNumber = planWeekNumber(now);
-  const rulesDef = rulesForWeek(weekNumber);
   const weekStartIso = formatIsoDate(weekStart);
   const weekEndIso = formatIsoDate(weekEnd);
+
+  if (!plan) {
+    return {
+      weekNumber: 0,
+      weekStart: weekStartIso,
+      weekEnd: weekEndIso,
+      phaseName: 'No milestone set',
+      rules: [
+        {
+          id: 'no-milestone',
+          label: 'Plan window',
+          expected: 'Mark an upcoming event as a milestone',
+          actual: 'No target race set',
+          status: 'pending',
+        },
+      ],
+    };
+  }
+
+  const weekNumber = currentWeekNumber(plan, now);
+  const rulesDef = rulesForWeek(plan, weekNumber);
 
   const inWeek = activities.filter((a) => {
     const local = a.start_date_local.slice(0, 10);
@@ -68,7 +82,7 @@ export function computeWeeklyCompliance(
   });
 
   const runs = inWeek.filter(isRun);
-  const longTarget = LONG_RUN_KM_BY_WEEK[weekNumber] ?? 0;
+  const longTarget = plan.longRunKmByWeek[weekNumber] ?? 0;
   const longestRunKm = runs.reduce((max, a) => Math.max(max, km(a)), 0);
 
   // Days with any activity
@@ -89,7 +103,7 @@ export function computeWeeklyCompliance(
   const weekComplete = now > weekEnd;
   const rules: ComplianceRule[] = [];
 
-  if (rulesDef.phaseId === 'off' || weekNumber < 1 || weekNumber > 30) {
+  if (weekNumber < 1 || weekNumber > plan.totalWeeks) {
     return {
       weekNumber,
       weekStart: weekStartIso,
@@ -99,7 +113,7 @@ export function computeWeeklyCompliance(
         {
           id: 'off-plan',
           label: 'Plan window',
-          expected: 'Weeks 1–30 of Liverpool Half plan',
+          expected: `Weeks 1–${plan.totalWeeks} of the ${plan.raceName} plan`,
           actual: weekNumber < 1 ? 'Before plan start' : 'After race / plan end',
           status: 'pending',
         },
