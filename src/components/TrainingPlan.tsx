@@ -1,9 +1,4 @@
-import {
-  LONG_RUN_MILESTONES,
-  RACE_NAME,
-  TRAINING_PHASES,
-} from '../data/trainingPlan';
-import type { DashboardData } from '../types';
+import type { GeneratedPlan } from '../lib/trainingPlan';
 
 const TAG_CLASS = {
   easy: 'tag-easy',
@@ -20,19 +15,32 @@ const TAG_LABEL = {
 } as const;
 
 export function TrainingPlan({
+  plan,
   analysis,
-  focus,
 }: {
+  plan: GeneratedPlan | null;
   analysis: string;
-  focus: DashboardData['focus'];
 }) {
-  const raceDate = new Date(focus.date + 'T00:00:00').toLocaleDateString('en-GB', {
+  if (!plan) {
+    return (
+      <section id="running-plan">
+        <h2>Running plan</h2>
+        <div className="card">
+          <p className="muted">
+            No upcoming milestone set. Mark an event as a milestone (the star icon on
+            an event card) to get a tailored training plan built around it.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const raceDate = new Date(plan.raceDate + 'T00:00:00').toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
 
-  // Split "How your data..." for bold lead-in
   const strongPrefix = 'How your data shaped this plan:';
   const body = analysis.startsWith(strongPrefix)
     ? analysis.slice(strongPrefix.length).trim()
@@ -41,14 +49,15 @@ export function TrainingPlan({
   return (
     <section id="running-plan">
       <h2>
-        Running plan — {RACE_NAME}, {raceDate}
+        Running plan — {plan.raceName}, {raceDate}
+        {plan.raceTarget ? ` · Target ${plan.raceTarget}` : ''}
       </h2>
 
       <div className="analysis-box">
         <strong>{strongPrefix}</strong> {body}
       </div>
 
-      {TRAINING_PHASES.map((phase) => (
+      {plan.phases.map((phase) => (
         <div className="phase-block" key={phase.id}>
           <h3>
             <span className="phase-dot" style={{ background: phase.color }} />
@@ -88,7 +97,7 @@ export function TrainingPlan({
             </tr>
           </thead>
           <tbody>
-            {LONG_RUN_MILESTONES.map((m) => (
+            {plan.longRunMilestones.map((m) => (
               <tr key={`${m.week}-${m.date}`}>
                 <td>{m.week === 'race' ? 'Race day' : m.week}</td>
                 <td>{m.date}</td>

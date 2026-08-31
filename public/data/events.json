@@ -1,0 +1,99 @@
+[
+  {
+    "id": "race-the-sun-2026",
+    "title": "Race the Sun — South Downs (Hike, Bike, Canoe)",
+    "distanceKm": 72,
+    "activityType": "Triathlon",
+    "date": "2026-04-25",
+    "link": "https://action.org.uk/events/team-challenges/race-the-sun-south-downs",
+    "imageUrl": "https://action.org.uk/sites/default/files/2025-07/rts-south-downs-2025-title.png",
+    "description": "Action Medical Research multisport team challenge on the South Downs: ~33 mile cycle, ~10 mile coastal hike (Seven Sisters), ~2 mile canoe on the River Cuckmere. Completed as a team, 'Hips, Knees and Toes'. Stage splits — 1: 3:43:10 (46th, +1:16:46) · 2: 3:33:27 (37th, +1:14:09) · 3: 42:19 (50th, +42:17) · 4: 1:08:40 (34th, +39:36). Overall +3:03:17 behind the leaders.",
+    "isMilestone": true,
+    "officialTime": "9:07:36",
+    "officialResultsUrl": "https://www.sportident.co.uk/results/AdventureElement/2026/RaceTheSunSouthDowns/"
+  },
+  {
+    "id": "tatton-race-for-life-2026",
+    "title": "Tatton Park Race for Life 10k",
+    "distanceKm": 10,
+    "activityType": "Run",
+    "date": "2026-06-28",
+    "link": "https://raceforlife.cancerresearchuk.org/find-an-event/tatton-park-10k-2026-06-28-0900",
+    "description": "Cancer Research UK charity 10k around Tatton Park's grass and gravel estate paths, chip-timed. First milestone goal.",
+    "isMilestone": true,
+    "officialTime": "56:38",
+    "officialResultsUrl": "https://results.resultsbase.net/myresults.aspx?uid=8-21093-12-49421"
+  },
+  {
+    "id": "caernarfon-half-2026",
+    "title": "Caernarfon Half Marathon",
+    "distanceKm": 21.1,
+    "activityType": "Run",
+    "date": "2026-09-06",
+    "link": "https://www.runwales.com/e/caernarfon-half-marathon-8668",
+    "imageUrl": "https://dh97sxltltum5.cloudfront.net/tenant_assets/tenant_id_535/757cc227-dfa0-471d-ba55-f26260c378ba.png",
+    "description": "Scenic half marathon starting and finishing beside Caernarfon Castle, North Wales."
+  },
+  {
+    "id": "autumn-cheshire-half-2026",
+    "title": "Autumn Cheshire Half Marathon",
+    "distanceKm": 21.1,
+    "activityType": "Run",
+    "date": "2026-09-13",
+    "link": "https://www.runthrough.co.uk/event/cheshire-autumn-half-marathon-2026",
+    "imageUrl": "https://cloudfront.runthrough.co.uk/uploads/public/media/images/GZpJLSs8XLQYHKKhRclqKhPAgEy2xpcG4JjgY6Tw/GZpJLSs8XLQYHKKhRclqKhPAgEy2xpcG4JjgY6Tw.jpg",
+    "description": "RunThrough closed rural-road half marathon from Capesthorne Hall, Macclesfield. Supports The Christie Charity."
+  },
+  {
+    "id": "chester-zoo-run-for-nature-2026",
+    "title": "Chester Zoo Run for Nature 10k",
+    "distanceKm": 10,
+    "activityType": "Run",
+    "date": "2026-09-20",
+    "link": "https://www.chesterzoo.org/support-our-charity/fundraise/run-for-nature",
+    "imageUrl": "https://www.chesterzoo.org/media/5effvoxz/zoorun-60.jpg?width=1920&quality=75",
+    "description": "Chester Zoo charity run through the zoo grounds; proceeds fund conservation work."
+  },
+  {
+    "id": "everton-10k-2026",
+    "title": "Everton 10k",
+    "distanceKm": 10,
+    "activityType": "Run",
+    "date": "2026-10-04",
+    "link": "https://www.everton10k.com/",
+    "imageUrl": "https://www.everton10k.com/wp-content/uploads/2025/03/EVERTON-10k-V4-01.png",
+    "description": "Chip-timed closed-road 10k starting and finishing at Everton FC's Hill Dickinson Stadium. Supports Everton in the Community."
+  },
+  {
+    "id": "tatton-half-2026",
+    "title": "Tatton Park Half Marathon",
+    "distanceKm": 21.1,
+    "activityType": "Run",
+    "date": "2026-11-08",
+    "link": "https://www.runthrough.co.uk/event/runtatton-half-marathon-november-2026",
+    "imageUrl": "https://cloudfront.runthrough.co.uk/uploads/public/media/images/UTWnwFwdCwvnk8hPeFCpfpxAcbWG6GJH9XO2l9LZ/UTWnwFwdCwvnk8hPeFCpfpxAcbWG6GJH9XO2l9LZ.png",
+    "description": "RunThrough closed-road half marathon in Tatton Park, Cheshire."
+  },
+  {
+    "id": "liverpool-santa-dash-2026",
+    "title": "Liverpool Santa Dash",
+    "distanceKm": 5,
+    "activityType": "Run",
+    "date": "2026-12-06",
+    "link": "https://www.btrliverpool.com/events/liverpool-santa-dash/",
+    "imageUrl": "https://www.btrliverpool.com/media/b2hbg3ir/dsc_0079.jpg",
+    "description": "BTR Liverpool's festive 5k from Pier Head, Santa suit included in entry — the UK's largest Santa fun run."
+  },
+  {
+    "id": "liverpool-half-2027",
+    "title": "Liverpool Half Marathon",
+    "distanceKm": 21.1,
+    "activityType": "Run",
+    "date": "2027-03-14",
+    "link": "https://www.btrliverpool.com/events/liverpool-half-marathon-and-10-mile/",
+    "imageUrl": "https://www.btrliverpool.com/media/3cfds0am/liverpool-half-marathon.png?width=1273&height=617",
+    "description": "BTR Liverpool half marathon along the Mersey waterfront, Pier Head start/finish. Second milestone goal.",
+    "isMilestone": true,
+    "targetTime": "2:15:00"
+  }
+]
