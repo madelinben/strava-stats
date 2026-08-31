@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { HeatDay } from '../types';
+import type { ActivityLite, HeatDay } from '../types';
+import { bucketForSport } from '../lib/sports';
+import { sportIcon } from '../lib/sportIcons';
 
 const SPORT_COLORS: Record<string, string> = {
   Run: '#10b981',
@@ -11,8 +13,10 @@ const SPORT_COLORS: Record<string, string> = {
   Hike: '#a855f7',
   Rowing: '#06b6d4',
   Soccer: '#eab308',
+  Padel: '#ec4899',
 };
-const EMPTY_COLOR = '#d1d5db';
+const EMPTY_LIGHT = '#e3e5e9';
+const EMPTY_DARK = '#cdd1d8';
 
 interface Cell {
   date: string;
@@ -20,22 +24,24 @@ interface Cell {
   dominant: string | null;
 }
 
-function buildWeeks(days: HeatDay[], today: Date): Cell[][] {
+/** Monday on/before Jan 1 of `year` — the grid always starts on a full week. */
+function gridStartDate(year: number): Date {
+  const startDate = new Date(year, 0, 1);
+  const dow = startDate.getDay();
+  const daysSinceMonday = (dow + 6) % 7;
+  startDate.setDate(startDate.getDate() - daysSinceMonday);
+  return startDate;
+}
+
+function buildWeeks(days: HeatDay[], year: number): Cell[][] {
   const dateMap: Record<string, string[]> = {};
   for (const d of days) {
     if (!dateMap[d.date]) dateMap[d.date] = [];
     dateMap[d.date].push(d.sport);
   }
 
-  const oneYearAgo = new Date(today);
-  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-  const startDate = new Date(oneYearAgo);
-  const dow = startDate.getDay();
-  const daysSinceMonday = (dow + 6) % 7;
-  startDate.setDate(startDate.getDate() - daysSinceMonday);
-
   const weeks: Cell[][] = [];
-  const cur = new Date(startDate);
+  const cur = new Date(gridStartDate(year));
   for (let w = 0; w < 53; w++) {
     const week: Cell[] = [];
     for (let d = 0; d < 7; d++) {
@@ -60,14 +66,102 @@ function buildWeeks(days: HeatDay[], today: Date): Cell[][] {
   return weeks;
 }
 
-export function Heatmap({ days }: { days: HeatDay[] }) {
-  const weeks = useMemo(() => buildWeeks(days, new Date()), [days]);
+interface MonthLabel {
+  name: string;
+  startWeek: number;
+  spanWeeks: number;
+}
+
+/** One label per calendar month, spanning from the week column containing
+ * that month's 1st through the week column containing its last day. */
+function buildMonthLabels(year: number): MonthLabel[] {
+  const start = gridStartDate(year);
+  const weekOf = (d: Date) =>
+    Math.floor((d.getTime() - start.getTime()) / (7 * 86400000));
+
+  const labels: MonthLabel[] = [];
+  for (let m = 0; m < 12; m++) {
+    const first = new Date(year, m, 1);
+    const last = new Date(year, m + 1, 0);
+    const startWeek = weekOf(first);
+    const endWeek = weekOf(last);
+    labels.push({
+      name: first.toLocaleDateString('en-GB', { month: 'short' }),
+      startWeek,
+      spanWeeks: endWeek - startWeek + 1,
+    });
+  }
+  return labels;
+}
+
+function todayIso(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Today's date, but only as a default selection when browsing today's own
+ * calendar year and there's actually something logged for it. */
+function defaultSelectedDate(year: number, activityLog: ActivityLite[]): string | null {
+  const today = todayIso();
+  if (Number(today.slice(0, 4)) !== year) return null;
+  return activityLog.some((a) => a.date === today) ? today : null;
+}
+
+function formatEventDate(iso: string): string {
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+function DayActivityRow({ activity }: { activity: ActivityLite }) {
+  const bucket = bucketForSport(activity.type);
+  const swatchColor = bucket.id === 'other' ? '#000' : bucket.color;
+  const Icon = sportIcon(bucket.id);
+  return (
+    <div
+      className="day-activity-row"
+      onClick={() => window.open(`https://www.strava.com/activities/${activity.id}`, '_blank', 'noreferrer')}
+    >
+      <div className="day-activity-swatch" style={{ background: swatchColor }}>
+        <Icon size={18} color="#fff" />
+      </div>
+      <div className="day-activity-info">
+        <div className="day-activity-title">{activity.name}</div>
+        <div className="day-activity-stats">
+          {activity.distanceKm} km · {activity.movingTime} · {activity.pace} /km
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Heatmap({
+  days,
+  year,
+  activityLog,
+}: {
+  days: HeatDay[];
+  year: number;
+  activityLog: ActivityLite[];
+}) {
+  const weeks = useMemo(() => buildWeeks(days, year), [days, year]);
+  const monthLabels = useMemo(() => buildMonthLabels(year), [year]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(() =>
+    defaultSelectedDate(year, activityLog),
+  );
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<{
     left: number;
     top: number;
     html: string;
   } | null>(null);
+
+  useEffect(() => {
+    setSelectedDate(defaultSelectedDate(year, activityLog));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year]);
 
   useEffect(() => {
     const el = tooltipRef.current;
@@ -84,10 +178,11 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
 
   const cellSize = 12;
   const gap = 3;
-  const baseY = 12;
+  const monthRowHeight = 16;
+  const baseY = 12 + monthRowHeight;
   const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const svgWidth = weeks.length * (cellSize + gap) + 50;
-  const svgHeight = 7 * (cellSize + gap) + 30;
+  const svgHeight = 7 * (cellSize + gap) + 30 + monthRowHeight;
 
   const legendItems: [string, string][] = [
     ['Run', SPORT_COLORS.Run],
@@ -96,13 +191,30 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
     ['Hike', SPORT_COLORS.Hike],
     ['Rowing', SPORT_COLORS.Rowing],
     ['Football', SPORT_COLORS.Soccer],
-    ['No activity', EMPTY_COLOR],
+    ['Padel', SPORT_COLORS.Padel],
+    ['No activity', EMPTY_LIGHT],
   ];
+
+  const selectedActivities = selectedDate
+    ? activityLog.filter((a) => a.date === selectedDate)
+    : [];
 
   return (
     <>
       <div className="heatmap-wrap">
         <svg width={svgWidth} height={svgHeight} viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
+          {monthLabels.map((ml) => (
+            <text
+              key={ml.name}
+              x={34 + ml.startWeek * (cellSize + gap)}
+              y={12}
+              fontSize={10}
+              fontWeight={600}
+              fill="#6b6a65"
+            >
+              {ml.name}
+            </text>
+          ))}
           {dayLabels.map((lbl, i) => {
             const cy = baseY + i * (cellSize + gap) + cellSize / 2;
             return (
@@ -120,9 +232,9 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
           })}
           {weeks.map((week, wi) =>
             week.map((day, di) => {
-              const color = day.dominant
-                ? (SPORT_COLORS[day.dominant] ?? '#64748b')
-                : EMPTY_COLOR;
+              const dayMonth = Number(day.date.slice(5, 7)) - 1;
+              const emptyColor = dayMonth % 2 === 0 ? EMPTY_LIGHT : EMPTY_DARK;
+              const color = day.dominant ? (SPORT_COLORS[day.dominant] ?? '#64748b') : emptyColor;
               const opacity =
                 day.count === 0 ? 1 : day.count === 1 ? 0.6 : day.count === 2 ? 0.85 : 1;
               const x = 34 + wi * (cellSize + gap);
@@ -130,7 +242,7 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
               return (
                 <rect
                   key={`${day.date}-${di}`}
-                  className="heat-cell"
+                  className={`heat-cell${selectedDate === day.date ? ' is-selected' : ''}`}
                   x={x}
                   y={y}
                   width={cellSize}
@@ -138,7 +250,13 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
                   rx={2}
                   fill={color}
                   opacity={opacity}
+                  stroke={selectedDate === day.date ? '#111' : 'none'}
+                  strokeWidth={selectedDate === day.date ? 1.5 : 0}
                   style={{ cursor: day.count > 0 ? 'pointer' : 'default' }}
+                  onClick={() => {
+                    if (day.count === 0) return;
+                    setSelectedDate((prev) => (prev === day.date ? null : day.date));
+                  }}
                   onMouseEnter={(e) => {
                     if (day.count === 0) return;
                     const dateObj = new Date(day.date + 'T00:00:00');
@@ -170,6 +288,15 @@ export function Heatmap({ days }: { days: HeatDay[] }) {
           </div>
         ))}
       </div>
+
+      {selectedDate ? (
+        <div className="day-activities-dropdown">
+          <h4>{formatEventDate(selectedDate)}</h4>
+          {selectedActivities.map((a) => (
+            <DayActivityRow key={a.id} activity={a} />
+          ))}
+        </div>
+      ) : null}
     </>
   );
 }
