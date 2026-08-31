@@ -5,679 +5,6 @@
     "location": "Chester, England",
     "initials": "BM"
   },
-  "focus": {
-    "race": "Liverpool Half Marathon",
-    "date": "2027-03-14",
-    "target": "2:15:00"
-  },
-  "summary": {
-    "activities": 55,
-    "runDistanceKm": 268.4,
-    "runs": 43,
-    "rides": 5,
-    "hikes": 3,
-    "dateRange": "14 Aug 2025 – 14 Aug 2026"
-  },
-  "heatmap": [
-    {
-      "date": "2026-01-17",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-01-24",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-01-31",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-02-07",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-02-14",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-02-15",
-      "sport": "Hike"
-    },
-    {
-      "date": "2026-02-22",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-02-28",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-03-08",
-      "sport": "Ride"
-    },
-    {
-      "date": "2026-03-21",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-03-28",
-      "sport": "Ride"
-    },
-    {
-      "date": "2026-04-01",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-04-04",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-04-15",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-04-25",
-      "sport": "Hike"
-    },
-    {
-      "date": "2026-04-25",
-      "sport": "Rowing"
-    },
-    {
-      "date": "2026-04-25",
-      "sport": "Hike"
-    },
-    {
-      "date": "2026-04-25",
-      "sport": "Ride"
-    },
-    {
-      "date": "2026-05-02",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-09",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-16",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-18",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-23",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-25",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-05-30",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-01",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-04",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-05",
-      "sport": "Walk"
-    },
-    {
-      "date": "2026-06-05",
-      "sport": "Walk"
-    },
-    {
-      "date": "2026-06-06",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-08",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-11",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-14",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-15",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-20",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-20",
-      "sport": "Walk"
-    },
-    {
-      "date": "2026-06-21",
-      "sport": "Ride"
-    },
-    {
-      "date": "2026-06-22",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-27",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-28",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-06-29",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-06",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-06",
-      "sport": "Ride"
-    },
-    {
-      "date": "2026-07-13",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-20",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-23",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-25",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-27",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-07-30",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-01",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-03",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-06",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-08",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-10",
-      "sport": "Run"
-    },
-    {
-      "date": "2026-08-11",
-      "sport": "Run"
-    }
-  ],
-  "running": {
-    "furthest": {
-      "value": "15.17 km",
-      "sub": "Evening Run · 11 Aug 2026"
-    },
-    "totalTime": {
-      "value": "26h 58m",
-      "sub": "Across 43 runs · 268.4 km total"
-    },
-    "shoeWear": {
-      "loggedKm": 268,
-      "lifeKm": 800,
-      "percent": 34
-    },
-    "distancePbs": [
-      {
-        "id": "5k",
-        "label": "Quickest 5k",
-        "value": "24:43",
-        "pace": "4:57 /km",
-        "sub": "Parkrun 18 - PB · 1 Aug 2026"
-      },
-      {
-        "id": "10k",
-        "label": "Quickest 10k",
-        "value": "56:24",
-        "pace": "5:38 /km",
-        "sub": "Tatton 10k - Cancer Research Race for Life · 28 Jun 2026"
-      },
-      {
-        "id": "10mile",
-        "label": "Quickest 10 mile",
-        "value": "—",
-        "pace": "—",
-        "sub": "No Strava best effort at this distance yet"
-      },
-      {
-        "id": "half",
-        "label": "Quickest half marathon",
-        "value": "—",
-        "pace": "—",
-        "sub": "No Strava best effort at this distance yet"
-      },
-      {
-        "id": "marathon",
-        "label": "Quickest marathon",
-        "value": "—",
-        "pace": "—",
-        "sub": "No Strava best effort at this distance yet"
-      }
-    ]
-  },
-  "groups": [
-    {
-      "id": "parkrun",
-      "name": "Parkrun",
-      "schedule": "Saturdays",
-      "runs": 19,
-      "totalDistanceKm": 96.59,
-      "avgDistanceKm": 5.08,
-      "avgPacePerKm": "5:38",
-      "fastestPacePerKm": "4:57",
-      "totalElevationM": 722,
-      "lastRun": "8 Aug 2026"
-    },
-    {
-      "id": "chstr",
-      "name": "CHSTR",
-      "schedule": "Mondays",
-      "runs": 14,
-      "totalDistanceKm": 83.22,
-      "avgDistanceKm": 5.94,
-      "avgPacePerKm": "6:16",
-      "fastestPacePerKm": "5:53",
-      "totalElevationM": 528,
-      "lastRun": "10 Aug 2026"
-    },
-    {
-      "id": "rcic",
-      "name": "RCIC",
-      "schedule": "Thursdays",
-      "runs": 3,
-      "totalDistanceKm": 19.43,
-      "avgDistanceKm": 6.48,
-      "avgPacePerKm": "5:56",
-      "fastestPacePerKm": "5:52",
-      "totalElevationM": 90,
-      "lastRun": "23 Jul 2026"
-    }
-  ],
-  "runPoints": [
-    {
-      "lat": 53.20717,
-      "lng": -2.90225,
-      "name": "Parkrun 1",
-      "date": "2026-01-17"
-    },
-    {
-      "lat": 53.20707,
-      "lng": -2.90219,
-      "name": "Parkrun 2",
-      "date": "2026-01-24"
-    },
-    {
-      "lat": 51.34538,
-      "lng": -0.46975,
-      "name": "Parkrun 3",
-      "date": "2026-01-31"
-    },
-    {
-      "lat": 53.20698,
-      "lng": -2.90211,
-      "name": "Parkrun 4",
-      "date": "2026-02-07"
-    },
-    {
-      "lat": 53.22945,
-      "lng": -2.68346,
-      "name": "Parkrun 5",
-      "date": "2026-02-14"
-    },
-    {
-      "lat": 53.20616,
-      "lng": -2.8965,
-      "name": "First 10k Run",
-      "date": "2026-02-22"
-    },
-    {
-      "lat": 53.20702,
-      "lng": -2.90214,
-      "name": "Parkrun 6",
-      "date": "2026-02-28"
-    },
-    {
-      "lat": 53.22641,
-      "lng": -2.68359,
-      "name": "Parkrun 7",
-      "date": "2026-03-21"
-    },
-    {
-      "lat": 53.20603,
-      "lng": -2.89685,
-      "name": "10k Run",
-      "date": "2026-04-01"
-    },
-    {
-      "lat": 53.20616,
-      "lng": -2.90136,
-      "name": "Parkrun 8",
-      "date": "2026-04-04"
-    },
-    {
-      "lat": 53.20599,
-      "lng": -2.89701,
-      "name": "Afternoon Run",
-      "date": "2026-04-15"
-    },
-    {
-      "lat": 53.20701,
-      "lng": -2.90222,
-      "name": "Parkrun 9",
-      "date": "2026-05-02"
-    },
-    {
-      "lat": 51.34515,
-      "lng": -0.46954,
-      "name": "Parkrun 10 - PB",
-      "date": "2026-05-09"
-    },
-    {
-      "lat": 53.20688,
-      "lng": -2.90205,
-      "name": "Parkrun 11",
-      "date": "2026-05-16"
-    },
-    {
-      "lat": 53.1851,
-      "lng": -2.89403,
-      "name": "First CHSTR Run & Social",
-      "date": "2026-05-18"
-    },
-    {
-      "lat": 51.34499,
-      "lng": -0.47159,
-      "name": "Parkrun 12",
-      "date": "2026-05-23"
-    },
-    {
-      "lat": 53.1877,
-      "lng": -2.89217,
-      "name": "CHSTR Run & Social 2",
-      "date": "2026-05-25"
-    },
-    {
-      "lat": 53.22941,
-      "lng": -2.6834,
-      "name": "Parkrun 13",
-      "date": "2026-05-30"
-    },
-    {
-      "lat": 53.18842,
-      "lng": -2.8968,
-      "name": "CHSTR Run & Social 3",
-      "date": "2026-06-01"
-    },
-    {
-      "lat": 53.19108,
-      "lng": -2.90249,
-      "name": "RCIC",
-      "date": "2026-06-04"
-    },
-    {
-      "lat": 53.20697,
-      "lng": -2.90206,
-      "name": "Parkrun 14",
-      "date": "2026-06-06"
-    },
-    {
-      "lat": 53.18499,
-      "lng": -2.89379,
-      "name": "CHSTR Run & Social 4",
-      "date": "2026-06-08"
-    },
-    {
-      "lat": 53.19125,
-      "lng": -2.90258,
-      "name": "RCIC",
-      "date": "2026-06-11"
-    },
-    {
-      "lat": 53.18817,
-      "lng": -2.89662,
-      "name": "CHSTR 10K with Wrexham",
-      "date": "2026-06-14"
-    },
-    {
-      "lat": 53.18474,
-      "lng": -2.89535,
-      "name": "CHSTR Run & Social 5",
-      "date": "2026-06-15"
-    },
-    {
-      "lat": 53.4435,
-      "lng": -2.89466,
-      "name": "Parkrun 15 with Joe",
-      "date": "2026-06-20"
-    },
-    {
-      "lat": 53.18493,
-      "lng": -2.8937,
-      "name": "CHSTR Run & Social 6",
-      "date": "2026-06-22"
-    },
-    {
-      "lat": 53.20704,
-      "lng": -2.90218,
-      "name": "Parkrun 16 with Sarah",
-      "date": "2026-06-27"
-    },
-    {
-      "lat": 53.32596,
-      "lng": -2.39084,
-      "name": "Tatton 10k - Cancer Research Race for Life",
-      "date": "2026-06-28"
-    },
-    {
-      "lat": 53.18493,
-      "lng": -2.8937,
-      "name": "CHSTR Run & Social 7",
-      "date": "2026-06-29"
-    },
-    {
-      "lat": 53.18486,
-      "lng": -2.89361,
-      "name": "CHSTR Run & Social 8",
-      "date": "2026-07-06"
-    },
-    {
-      "lat": 53.18496,
-      "lng": -2.8938,
-      "name": "CHSTR Run & Social 9",
-      "date": "2026-07-13"
-    },
-    {
-      "lat": 53.18813,
-      "lng": -2.89661,
-      "name": "CHSTR Run & Social 10",
-      "date": "2026-07-20"
-    },
-    {
-      "lat": 53.19117,
-      "lng": -2.90254,
-      "name": "RCIC",
-      "date": "2026-07-23"
-    },
-    {
-      "lat": 53.20696,
-      "lng": -2.9021,
-      "name": "Parkrun 17 - PB",
-      "date": "2026-07-25"
-    },
-    {
-      "lat": 53.18816,
-      "lng": -2.89666,
-      "name": "CHSTR 11",
-      "date": "2026-07-27"
-    },
-    {
-      "lat": 53.18509,
-      "lng": -2.89497,
-      "name": "Evening Run",
-      "date": "2026-07-30"
-    },
-    {
-      "lat": 53.22938,
-      "lng": -2.68339,
-      "name": "Parkrun 18 - PB",
-      "date": "2026-08-01"
-    },
-    {
-      "lat": 53.18487,
-      "lng": -2.89354,
-      "name": "CHSTR 12",
-      "date": "2026-08-03"
-    },
-    {
-      "lat": 53.20491,
-      "lng": -2.87111,
-      "name": "Evening Run",
-      "date": "2026-08-06"
-    },
-    {
-      "lat": 53.20695,
-      "lng": -2.90206,
-      "name": "Parkrun 19",
-      "date": "2026-08-08"
-    },
-    {
-      "lat": 53.18484,
-      "lng": -2.89335,
-      "name": "CHSTR 13",
-      "date": "2026-08-10"
-    },
-    {
-      "lat": 53.18797,
-      "lng": -2.89654,
-      "name": "Evening Run",
-      "date": "2026-08-11"
-    }
-  ],
-  "ridePoints": [
-    {
-      "lat": 52.0854,
-      "lng": -1.74764,
-      "name": "Stratford Greenway Bike Ride with Dad",
-      "date": "2026-03-08"
-    },
-    {
-      "lat": 51.35456,
-      "lng": -0.48476,
-      "name": "Hampton Court Bike Ride with Dad",
-      "date": "2026-03-28"
-    },
-    {
-      "lat": 50.76956,
-      "lng": 0.10563,
-      "name": "Race the Sun: South Downs - Cycle",
-      "date": "2026-04-25"
-    },
-    {
-      "lat": 52.20244,
-      "lng": -1.61659,
-      "name": "Stratford Greenway with Dad",
-      "date": "2026-06-21"
-    },
-    {
-      "lat": 53.18404,
-      "lng": -2.89638,
-      "name": "Night Ride",
-      "date": "2026-07-06"
-    }
-  ],
-  "hikePoints": [
-    {
-      "lat": 53.13868,
-      "lng": -3.24651,
-      "name": "Moel Famau Hike",
-      "date": "2026-02-15"
-    },
-    {
-      "lat": 50.76589,
-      "lng": 0.10626,
-      "name": "Race the Sun: South Downs - Hike First Stage",
-      "date": "2026-04-25"
-    },
-    {
-      "lat": 50.77482,
-      "lng": 0.15281,
-      "name": "Race the Sun: South Downs - Hike Second Stage",
-      "date": "2026-04-25"
-    }
-  ],
-  "cycling": {
-    "furthest": {
-      "value": "51.57 km",
-      "sub": "Race the Sun: South Downs · 25 Apr 2026"
-    },
-    "longestTime": {
-      "value": "2h 52m",
-      "sub": "Race the Sun: South Downs · 25 Apr 2026"
-    },
-    "totalTime": {
-      "value": "9h 46m",
-      "sub": "Across 5 rides this year"
-    },
-    "totalDistance": {
-      "value": "165.7 km",
-      "sub": "5 rides logged"
-    }
-  },
-  "hiking": {
-    "highestElevation": {
-      "value": "574 m",
-      "sub": "Moel Famau Hike · 15 Feb 2026"
-    },
-    "favouriteLocation": {
-      "value": "Race the Sun",
-      "sub": "South Downs · 2 hikes on the same event"
-    },
-    "furthest": {
-      "value": "12.91 km",
-      "sub": "Moel Famau Hike · 15 Feb 2026"
-    },
-    "totalTime": {
-      "value": "6h 47m",
-      "sub": "Across 3 hikes this year"
-    }
-  },
   "compliance": {
     "weekNumber": 0,
     "weekStart": "2026-08-10",
@@ -693,5 +20,1515 @@
       }
     ]
   },
-  "analysis": "How your data shaped this plan: Over the last six months your 5k pace has improved from roughly 5:38/km (Parkrun average) down to a 24:57 PB at 4:57/km, and your one 10k race (Tatton, 57:10) sits at 5:40/km — both point to an easy-pace baseline around 6:10–6:30/km and a current half-marathon equivalent of roughly 2:05–2:10 if you raced today. Your longest run to date is 15.17 km, so the plan below builds gradually from that, rather than assuming endurance you haven't logged yet. Your Strava heart-rate zones (Z2 127–157 bpm, Z3 158–173 bpm) are used directly for the easy and tempo targets. Because your actual fitness is already a little ahead of a 2:15 finish, the plan keeps 2:15 as the safety-net goal but structures speed work to leave room for a faster day if training goes well."
+  "analysis": "How your data shaped this plan: Over the last six months your 5k pace has improved from roughly 5:38/km (Parkrun average) down to a 24:57 PB at 4:57/km, and your one 10k race (Tatton, 57:10) sits at 5:40/km — both point to an easy-pace baseline around 6:10–6:30/km and a current half-marathon equivalent of roughly 2:05–2:10 if you raced today. Your longest run to date is 15.17 km, so the plan below builds gradually from that, rather than assuming endurance you haven't logged yet. Your Strava heart-rate zones (Z2 127–157 bpm, Z3 158–173 bpm) are used directly for the easy and tempo targets. Because your actual fitness is already a little ahead of a 2:15 finish, the plan keeps 2:15 as the safety-net goal but structures speed work to leave room for a faster day if training goes well.",
+  "years": {
+    "2026": {
+      "summary": {
+        "activities": 55,
+        "runDistanceKm": 268.4,
+        "runs": 43,
+        "rides": 5,
+        "hikes": 3,
+        "dateRange": "14 Aug 2025 – 14 Aug 2026"
+      },
+      "heatmap": [
+        {
+          "date": "2026-01-17",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-01-24",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-01-31",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-07",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-14",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-15",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-02-22",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-28",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-03-08",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-03-21",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-03-28",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-04-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-04",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-15",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Rowing"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-05-02",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-09",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-16",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-18",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-23",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-25",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-30",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-04",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-05",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-05",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-08",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-11",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-14",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-15",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-20",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-20",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-21",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-06-22",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-27",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-28",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-29",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-06",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-07-13",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-20",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-23",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-25",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-27",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-30",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-03",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-08",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-10",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-11",
+          "sport": "Run"
+        }
+      ],
+      "activityLog": [
+        {
+          "name": "Parkrun 1",
+          "type": "Run",
+          "date": "2026-01-17",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000000
+        },
+        {
+          "name": "Parkrun 2",
+          "type": "Run",
+          "date": "2026-01-24",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000001
+        },
+        {
+          "name": "Parkrun 3",
+          "type": "Run",
+          "date": "2026-01-31",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000002
+        },
+        {
+          "name": "Parkrun 4",
+          "type": "Run",
+          "date": "2026-02-07",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000003
+        },
+        {
+          "name": "Parkrun 5",
+          "type": "Run",
+          "date": "2026-02-14",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000004
+        },
+        {
+          "name": "First 10k Run",
+          "type": "Run",
+          "date": "2026-02-22",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000005
+        },
+        {
+          "name": "Stratford Greenway Bike Ride with Dad",
+          "type": "Ride",
+          "date": "2026-03-08",
+          "distanceKm": 20,
+          "movingTime": "1h 05m",
+          "pace": "—",
+          "id": 9000000006
+        },
+        {
+          "name": "Hampton Court Bike Ride with Dad",
+          "type": "Ride",
+          "date": "2026-03-28",
+          "distanceKm": 20,
+          "movingTime": "1h 05m",
+          "pace": "—",
+          "id": 9000000007
+        }
+      ],
+      "running": {
+        "furthest": {
+          "value": "15.17 km",
+          "sub": "Evening Run · 11 Aug 2026"
+        },
+        "totalTime": {
+          "value": "26h 58m",
+          "sub": "Across 43 runs · 268.4 km total"
+        },
+        "shoeWear": {
+          "loggedKm": 268,
+          "lifeKm": 800,
+          "percent": 34
+        },
+        "distancePbs": [
+          {
+            "id": "5k",
+            "label": "Quickest 5k",
+            "value": "24:43",
+            "pace": "4:57 /km",
+            "sub": "Parkrun 18 - PB · 1 Aug 2026"
+          },
+          {
+            "id": "10k",
+            "label": "Quickest 10k",
+            "value": "56:24",
+            "pace": "5:38 /km",
+            "sub": "Tatton 10k - Cancer Research Race for Life · 28 Jun 2026"
+          },
+          {
+            "id": "10mile",
+            "label": "Quickest 10 mile",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          },
+          {
+            "id": "half",
+            "label": "Quickest half marathon",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          },
+          {
+            "id": "marathon",
+            "label": "Quickest marathon",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          }
+        ]
+      },
+      "groups": [
+        {
+          "id": "parkrun",
+          "name": "Parkrun",
+          "schedule": "Saturdays",
+          "runs": 19,
+          "totalDistanceKm": 96.59,
+          "avgDistanceKm": 5.08,
+          "avgPacePerKm": "5:38",
+          "fastestPacePerKm": "4:57",
+          "totalElevationM": 722,
+          "lastRun": "8 Aug 2026"
+        },
+        {
+          "id": "chstr",
+          "name": "CHSTR",
+          "schedule": "Mondays",
+          "runs": 14,
+          "totalDistanceKm": 83.22,
+          "avgDistanceKm": 5.94,
+          "avgPacePerKm": "6:16",
+          "fastestPacePerKm": "5:53",
+          "totalElevationM": 528,
+          "lastRun": "10 Aug 2026"
+        },
+        {
+          "id": "rcic",
+          "name": "RCIC",
+          "schedule": "Thursdays",
+          "runs": 3,
+          "totalDistanceKm": 19.43,
+          "avgDistanceKm": 6.48,
+          "avgPacePerKm": "5:56",
+          "fastestPacePerKm": "5:52",
+          "totalElevationM": 90,
+          "lastRun": "23 Jul 2026"
+        }
+      ],
+      "cycling": {
+        "furthest": {
+          "value": "51.57 km",
+          "sub": "Race the Sun: South Downs · 25 Apr 2026"
+        },
+        "longestTime": {
+          "value": "2h 52m",
+          "sub": "Race the Sun: South Downs · 25 Apr 2026"
+        },
+        "totalTime": {
+          "value": "9h 46m",
+          "sub": "Across 5 rides this year"
+        },
+        "totalDistance": {
+          "value": "165.7 km",
+          "sub": "5 rides logged"
+        }
+      },
+      "hiking": {
+        "highestElevation": {
+          "value": "574 m",
+          "sub": "Moel Famau Hike · 15 Feb 2026"
+        },
+        "favouriteLocation": {
+          "value": "Race the Sun",
+          "sub": "South Downs · 2 hikes on the same event"
+        },
+        "furthest": {
+          "value": "12.91 km",
+          "sub": "Moel Famau Hike · 15 Feb 2026"
+        },
+        "totalTime": {
+          "value": "6h 47m",
+          "sub": "Across 3 hikes this year"
+        },
+        "totalDistance": {
+          "value": "23.4 km",
+          "sub": "3 hikes logged"
+        }
+      },
+      "pointsByBucket": {
+        "run": [
+          {
+            "lat": 53.20717,
+            "lng": -2.90225,
+            "name": "Parkrun 1",
+            "date": "2026-01-17"
+          },
+          {
+            "lat": 53.20707,
+            "lng": -2.90219,
+            "name": "Parkrun 2",
+            "date": "2026-01-24"
+          },
+          {
+            "lat": 51.34538,
+            "lng": -0.46975,
+            "name": "Parkrun 3",
+            "date": "2026-01-31"
+          },
+          {
+            "lat": 53.20698,
+            "lng": -2.90211,
+            "name": "Parkrun 4",
+            "date": "2026-02-07"
+          },
+          {
+            "lat": 53.22945,
+            "lng": -2.68346,
+            "name": "Parkrun 5",
+            "date": "2026-02-14"
+          },
+          {
+            "lat": 53.20616,
+            "lng": -2.8965,
+            "name": "First 10k Run",
+            "date": "2026-02-22"
+          },
+          {
+            "lat": 53.20702,
+            "lng": -2.90214,
+            "name": "Parkrun 6",
+            "date": "2026-02-28"
+          },
+          {
+            "lat": 53.22641,
+            "lng": -2.68359,
+            "name": "Parkrun 7",
+            "date": "2026-03-21"
+          },
+          {
+            "lat": 53.20603,
+            "lng": -2.89685,
+            "name": "10k Run",
+            "date": "2026-04-01"
+          },
+          {
+            "lat": 53.20616,
+            "lng": -2.90136,
+            "name": "Parkrun 8",
+            "date": "2026-04-04"
+          },
+          {
+            "lat": 53.20599,
+            "lng": -2.89701,
+            "name": "Afternoon Run",
+            "date": "2026-04-15"
+          },
+          {
+            "lat": 53.20701,
+            "lng": -2.90222,
+            "name": "Parkrun 9",
+            "date": "2026-05-02"
+          },
+          {
+            "lat": 51.34515,
+            "lng": -0.46954,
+            "name": "Parkrun 10 - PB",
+            "date": "2026-05-09"
+          },
+          {
+            "lat": 53.20688,
+            "lng": -2.90205,
+            "name": "Parkrun 11",
+            "date": "2026-05-16"
+          },
+          {
+            "lat": 53.1851,
+            "lng": -2.89403,
+            "name": "First CHSTR Run & Social",
+            "date": "2026-05-18"
+          },
+          {
+            "lat": 51.34499,
+            "lng": -0.47159,
+            "name": "Parkrun 12",
+            "date": "2026-05-23"
+          },
+          {
+            "lat": 53.1877,
+            "lng": -2.89217,
+            "name": "CHSTR Run & Social 2",
+            "date": "2026-05-25"
+          },
+          {
+            "lat": 53.22941,
+            "lng": -2.6834,
+            "name": "Parkrun 13",
+            "date": "2026-05-30"
+          },
+          {
+            "lat": 53.18842,
+            "lng": -2.8968,
+            "name": "CHSTR Run & Social 3",
+            "date": "2026-06-01"
+          },
+          {
+            "lat": 53.19108,
+            "lng": -2.90249,
+            "name": "RCIC",
+            "date": "2026-06-04"
+          },
+          {
+            "lat": 53.20697,
+            "lng": -2.90206,
+            "name": "Parkrun 14",
+            "date": "2026-06-06"
+          },
+          {
+            "lat": 53.18499,
+            "lng": -2.89379,
+            "name": "CHSTR Run & Social 4",
+            "date": "2026-06-08"
+          },
+          {
+            "lat": 53.19125,
+            "lng": -2.90258,
+            "name": "RCIC",
+            "date": "2026-06-11"
+          },
+          {
+            "lat": 53.18817,
+            "lng": -2.89662,
+            "name": "CHSTR 10K with Wrexham",
+            "date": "2026-06-14"
+          },
+          {
+            "lat": 53.18474,
+            "lng": -2.89535,
+            "name": "CHSTR Run & Social 5",
+            "date": "2026-06-15"
+          },
+          {
+            "lat": 53.4435,
+            "lng": -2.89466,
+            "name": "Parkrun 15 with Joe",
+            "date": "2026-06-20"
+          },
+          {
+            "lat": 53.18493,
+            "lng": -2.8937,
+            "name": "CHSTR Run & Social 6",
+            "date": "2026-06-22"
+          },
+          {
+            "lat": 53.20704,
+            "lng": -2.90218,
+            "name": "Parkrun 16 with Sarah",
+            "date": "2026-06-27"
+          },
+          {
+            "lat": 53.32596,
+            "lng": -2.39084,
+            "name": "Tatton 10k - Cancer Research Race for Life",
+            "date": "2026-06-28"
+          },
+          {
+            "lat": 53.18493,
+            "lng": -2.8937,
+            "name": "CHSTR Run & Social 7",
+            "date": "2026-06-29"
+          },
+          {
+            "lat": 53.18486,
+            "lng": -2.89361,
+            "name": "CHSTR Run & Social 8",
+            "date": "2026-07-06"
+          },
+          {
+            "lat": 53.18496,
+            "lng": -2.8938,
+            "name": "CHSTR Run & Social 9",
+            "date": "2026-07-13"
+          },
+          {
+            "lat": 53.18813,
+            "lng": -2.89661,
+            "name": "CHSTR Run & Social 10",
+            "date": "2026-07-20"
+          },
+          {
+            "lat": 53.19117,
+            "lng": -2.90254,
+            "name": "RCIC",
+            "date": "2026-07-23"
+          },
+          {
+            "lat": 53.20696,
+            "lng": -2.9021,
+            "name": "Parkrun 17 - PB",
+            "date": "2026-07-25"
+          },
+          {
+            "lat": 53.18816,
+            "lng": -2.89666,
+            "name": "CHSTR 11",
+            "date": "2026-07-27"
+          },
+          {
+            "lat": 53.18509,
+            "lng": -2.89497,
+            "name": "Evening Run",
+            "date": "2026-07-30"
+          },
+          {
+            "lat": 53.22938,
+            "lng": -2.68339,
+            "name": "Parkrun 18 - PB",
+            "date": "2026-08-01"
+          },
+          {
+            "lat": 53.18487,
+            "lng": -2.89354,
+            "name": "CHSTR 12",
+            "date": "2026-08-03"
+          },
+          {
+            "lat": 53.20491,
+            "lng": -2.87111,
+            "name": "Evening Run",
+            "date": "2026-08-06"
+          },
+          {
+            "lat": 53.20695,
+            "lng": -2.90206,
+            "name": "Parkrun 19",
+            "date": "2026-08-08"
+          },
+          {
+            "lat": 53.18484,
+            "lng": -2.89335,
+            "name": "CHSTR 13",
+            "date": "2026-08-10"
+          },
+          {
+            "lat": 53.18797,
+            "lng": -2.89654,
+            "name": "Evening Run",
+            "date": "2026-08-11"
+          }
+        ],
+        "ride": [
+          {
+            "lat": 52.0854,
+            "lng": -1.74764,
+            "name": "Stratford Greenway Bike Ride with Dad",
+            "date": "2026-03-08"
+          },
+          {
+            "lat": 51.35456,
+            "lng": -0.48476,
+            "name": "Hampton Court Bike Ride with Dad",
+            "date": "2026-03-28"
+          },
+          {
+            "lat": 50.76956,
+            "lng": 0.10563,
+            "name": "Race the Sun: South Downs - Cycle",
+            "date": "2026-04-25"
+          },
+          {
+            "lat": 52.20244,
+            "lng": -1.61659,
+            "name": "Stratford Greenway with Dad",
+            "date": "2026-06-21"
+          },
+          {
+            "lat": 53.18404,
+            "lng": -2.89638,
+            "name": "Night Ride",
+            "date": "2026-07-06"
+          }
+        ],
+        "hike": [
+          {
+            "lat": 53.13868,
+            "lng": -3.24651,
+            "name": "Moel Famau Hike",
+            "date": "2026-02-15"
+          },
+          {
+            "lat": 50.76589,
+            "lng": 0.10626,
+            "name": "Race the Sun: South Downs - Hike First Stage",
+            "date": "2026-04-25"
+          },
+          {
+            "lat": 50.77482,
+            "lng": 0.15281,
+            "name": "Race the Sun: South Downs - Hike Second Stage",
+            "date": "2026-04-25"
+          }
+        ]
+      },
+      "routesByBucket": {},
+      "regionsByBucket": {}
+    },
+    "all": {
+      "summary": {
+        "activities": 55,
+        "runDistanceKm": 268.4,
+        "runs": 43,
+        "rides": 5,
+        "hikes": 3,
+        "dateRange": "14 Aug 2025 – 14 Aug 2026"
+      },
+      "heatmap": [
+        {
+          "date": "2026-01-17",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-01-24",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-01-31",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-07",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-14",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-15",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-02-22",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-02-28",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-03-08",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-03-21",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-03-28",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-04-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-04",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-15",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Rowing"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Hike"
+        },
+        {
+          "date": "2026-04-25",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-05-02",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-09",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-16",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-18",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-23",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-25",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-05-30",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-04",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-05",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-05",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-08",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-11",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-14",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-15",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-20",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-20",
+          "sport": "Walk"
+        },
+        {
+          "date": "2026-06-21",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-06-22",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-27",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-28",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-06-29",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-06",
+          "sport": "Ride"
+        },
+        {
+          "date": "2026-07-13",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-20",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-23",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-25",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-27",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-07-30",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-01",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-03",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-06",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-08",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-10",
+          "sport": "Run"
+        },
+        {
+          "date": "2026-08-11",
+          "sport": "Run"
+        }
+      ],
+      "activityLog": [
+        {
+          "name": "Parkrun 1",
+          "type": "Run",
+          "date": "2026-01-17",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000000
+        },
+        {
+          "name": "Parkrun 2",
+          "type": "Run",
+          "date": "2026-01-24",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000001
+        },
+        {
+          "name": "Parkrun 3",
+          "type": "Run",
+          "date": "2026-01-31",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000002
+        },
+        {
+          "name": "Parkrun 4",
+          "type": "Run",
+          "date": "2026-02-07",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000003
+        },
+        {
+          "name": "Parkrun 5",
+          "type": "Run",
+          "date": "2026-02-14",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000004
+        },
+        {
+          "name": "First 10k Run",
+          "type": "Run",
+          "date": "2026-02-22",
+          "distanceKm": 5,
+          "movingTime": "25m",
+          "pace": "5:00",
+          "id": 9000000005
+        },
+        {
+          "name": "Stratford Greenway Bike Ride with Dad",
+          "type": "Ride",
+          "date": "2026-03-08",
+          "distanceKm": 20,
+          "movingTime": "1h 05m",
+          "pace": "—",
+          "id": 9000000006
+        },
+        {
+          "name": "Hampton Court Bike Ride with Dad",
+          "type": "Ride",
+          "date": "2026-03-28",
+          "distanceKm": 20,
+          "movingTime": "1h 05m",
+          "pace": "—",
+          "id": 9000000007
+        }
+      ],
+      "running": {
+        "furthest": {
+          "value": "15.17 km",
+          "sub": "Evening Run · 11 Aug 2026"
+        },
+        "totalTime": {
+          "value": "26h 58m",
+          "sub": "Across 43 runs · 268.4 km total"
+        },
+        "shoeWear": {
+          "loggedKm": 268,
+          "lifeKm": 800,
+          "percent": 34
+        },
+        "distancePbs": [
+          {
+            "id": "5k",
+            "label": "Quickest 5k",
+            "value": "24:43",
+            "pace": "4:57 /km",
+            "sub": "Parkrun 18 - PB · 1 Aug 2026"
+          },
+          {
+            "id": "10k",
+            "label": "Quickest 10k",
+            "value": "56:24",
+            "pace": "5:38 /km",
+            "sub": "Tatton 10k - Cancer Research Race for Life · 28 Jun 2026"
+          },
+          {
+            "id": "10mile",
+            "label": "Quickest 10 mile",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          },
+          {
+            "id": "half",
+            "label": "Quickest half marathon",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          },
+          {
+            "id": "marathon",
+            "label": "Quickest marathon",
+            "value": "—",
+            "pace": "—",
+            "sub": "No Strava best effort at this distance yet"
+          }
+        ]
+      },
+      "groups": [
+        {
+          "id": "parkrun",
+          "name": "Parkrun",
+          "schedule": "Saturdays",
+          "runs": 19,
+          "totalDistanceKm": 96.59,
+          "avgDistanceKm": 5.08,
+          "avgPacePerKm": "5:38",
+          "fastestPacePerKm": "4:57",
+          "totalElevationM": 722,
+          "lastRun": "8 Aug 2026"
+        },
+        {
+          "id": "chstr",
+          "name": "CHSTR",
+          "schedule": "Mondays",
+          "runs": 14,
+          "totalDistanceKm": 83.22,
+          "avgDistanceKm": 5.94,
+          "avgPacePerKm": "6:16",
+          "fastestPacePerKm": "5:53",
+          "totalElevationM": 528,
+          "lastRun": "10 Aug 2026"
+        },
+        {
+          "id": "rcic",
+          "name": "RCIC",
+          "schedule": "Thursdays",
+          "runs": 3,
+          "totalDistanceKm": 19.43,
+          "avgDistanceKm": 6.48,
+          "avgPacePerKm": "5:56",
+          "fastestPacePerKm": "5:52",
+          "totalElevationM": 90,
+          "lastRun": "23 Jul 2026"
+        }
+      ],
+      "cycling": {
+        "furthest": {
+          "value": "51.57 km",
+          "sub": "Race the Sun: South Downs · 25 Apr 2026"
+        },
+        "longestTime": {
+          "value": "2h 52m",
+          "sub": "Race the Sun: South Downs · 25 Apr 2026"
+        },
+        "totalTime": {
+          "value": "9h 46m",
+          "sub": "Across 5 rides this year"
+        },
+        "totalDistance": {
+          "value": "165.7 km",
+          "sub": "5 rides logged"
+        }
+      },
+      "hiking": {
+        "highestElevation": {
+          "value": "574 m",
+          "sub": "Moel Famau Hike · 15 Feb 2026"
+        },
+        "favouriteLocation": {
+          "value": "Race the Sun",
+          "sub": "South Downs · 2 hikes on the same event"
+        },
+        "furthest": {
+          "value": "12.91 km",
+          "sub": "Moel Famau Hike · 15 Feb 2026"
+        },
+        "totalTime": {
+          "value": "6h 47m",
+          "sub": "Across 3 hikes this year"
+        },
+        "totalDistance": {
+          "value": "23.4 km",
+          "sub": "3 hikes logged"
+        }
+      },
+      "pointsByBucket": {
+        "run": [
+          {
+            "lat": 53.20717,
+            "lng": -2.90225,
+            "name": "Parkrun 1",
+            "date": "2026-01-17"
+          },
+          {
+            "lat": 53.20707,
+            "lng": -2.90219,
+            "name": "Parkrun 2",
+            "date": "2026-01-24"
+          },
+          {
+            "lat": 51.34538,
+            "lng": -0.46975,
+            "name": "Parkrun 3",
+            "date": "2026-01-31"
+          },
+          {
+            "lat": 53.20698,
+            "lng": -2.90211,
+            "name": "Parkrun 4",
+            "date": "2026-02-07"
+          },
+          {
+            "lat": 53.22945,
+            "lng": -2.68346,
+            "name": "Parkrun 5",
+            "date": "2026-02-14"
+          },
+          {
+            "lat": 53.20616,
+            "lng": -2.8965,
+            "name": "First 10k Run",
+            "date": "2026-02-22"
+          },
+          {
+            "lat": 53.20702,
+            "lng": -2.90214,
+            "name": "Parkrun 6",
+            "date": "2026-02-28"
+          },
+          {
+            "lat": 53.22641,
+            "lng": -2.68359,
+            "name": "Parkrun 7",
+            "date": "2026-03-21"
+          },
+          {
+            "lat": 53.20603,
+            "lng": -2.89685,
+            "name": "10k Run",
+            "date": "2026-04-01"
+          },
+          {
+            "lat": 53.20616,
+            "lng": -2.90136,
+            "name": "Parkrun 8",
+            "date": "2026-04-04"
+          },
+          {
+            "lat": 53.20599,
+            "lng": -2.89701,
+            "name": "Afternoon Run",
+            "date": "2026-04-15"
+          },
+          {
+            "lat": 53.20701,
+            "lng": -2.90222,
+            "name": "Parkrun 9",
+            "date": "2026-05-02"
+          },
+          {
+            "lat": 51.34515,
+            "lng": -0.46954,
+            "name": "Parkrun 10 - PB",
+            "date": "2026-05-09"
+          },
+          {
+            "lat": 53.20688,
+            "lng": -2.90205,
+            "name": "Parkrun 11",
+            "date": "2026-05-16"
+          },
+          {
+            "lat": 53.1851,
+            "lng": -2.89403,
+            "name": "First CHSTR Run & Social",
+            "date": "2026-05-18"
+          },
+          {
+            "lat": 51.34499,
+            "lng": -0.47159,
+            "name": "Parkrun 12",
+            "date": "2026-05-23"
+          },
+          {
+            "lat": 53.1877,
+            "lng": -2.89217,
+            "name": "CHSTR Run & Social 2",
+            "date": "2026-05-25"
+          },
+          {
+            "lat": 53.22941,
+            "lng": -2.6834,
+            "name": "Parkrun 13",
+            "date": "2026-05-30"
+          },
+          {
+            "lat": 53.18842,
+            "lng": -2.8968,
+            "name": "CHSTR Run & Social 3",
+            "date": "2026-06-01"
+          },
+          {
+            "lat": 53.19108,
+            "lng": -2.90249,
+            "name": "RCIC",
+            "date": "2026-06-04"
+          },
+          {
+            "lat": 53.20697,
+            "lng": -2.90206,
+            "name": "Parkrun 14",
+            "date": "2026-06-06"
+          },
+          {
+            "lat": 53.18499,
+            "lng": -2.89379,
+            "name": "CHSTR Run & Social 4",
+            "date": "2026-06-08"
+          },
+          {
+            "lat": 53.19125,
+            "lng": -2.90258,
+            "name": "RCIC",
+            "date": "2026-06-11"
+          },
+          {
+            "lat": 53.18817,
+            "lng": -2.89662,
+            "name": "CHSTR 10K with Wrexham",
+            "date": "2026-06-14"
+          },
+          {
+            "lat": 53.18474,
+            "lng": -2.89535,
+            "name": "CHSTR Run & Social 5",
+            "date": "2026-06-15"
+          },
+          {
+            "lat": 53.4435,
+            "lng": -2.89466,
+            "name": "Parkrun 15 with Joe",
+            "date": "2026-06-20"
+          },
+          {
+            "lat": 53.18493,
+            "lng": -2.8937,
+            "name": "CHSTR Run & Social 6",
+            "date": "2026-06-22"
+          },
+          {
+            "lat": 53.20704,
+            "lng": -2.90218,
+            "name": "Parkrun 16 with Sarah",
+            "date": "2026-06-27"
+          },
+          {
+            "lat": 53.32596,
+            "lng": -2.39084,
+            "name": "Tatton 10k - Cancer Research Race for Life",
+            "date": "2026-06-28"
+          },
+          {
+            "lat": 53.18493,
+            "lng": -2.8937,
+            "name": "CHSTR Run & Social 7",
+            "date": "2026-06-29"
+          },
+          {
+            "lat": 53.18486,
+            "lng": -2.89361,
+            "name": "CHSTR Run & Social 8",
+            "date": "2026-07-06"
+          },
+          {
+            "lat": 53.18496,
+            "lng": -2.8938,
+            "name": "CHSTR Run & Social 9",
+            "date": "2026-07-13"
+          },
+          {
+            "lat": 53.18813,
+            "lng": -2.89661,
+            "name": "CHSTR Run & Social 10",
+            "date": "2026-07-20"
+          },
+          {
+            "lat": 53.19117,
+            "lng": -2.90254,
+            "name": "RCIC",
+            "date": "2026-07-23"
+          },
+          {
+            "lat": 53.20696,
+            "lng": -2.9021,
+            "name": "Parkrun 17 - PB",
+            "date": "2026-07-25"
+          },
+          {
+            "lat": 53.18816,
+            "lng": -2.89666,
+            "name": "CHSTR 11",
+            "date": "2026-07-27"
+          },
+          {
+            "lat": 53.18509,
+            "lng": -2.89497,
+            "name": "Evening Run",
+            "date": "2026-07-30"
+          },
+          {
+            "lat": 53.22938,
+            "lng": -2.68339,
+            "name": "Parkrun 18 - PB",
+            "date": "2026-08-01"
+          },
+          {
+            "lat": 53.18487,
+            "lng": -2.89354,
+            "name": "CHSTR 12",
+            "date": "2026-08-03"
+          },
+          {
+            "lat": 53.20491,
+            "lng": -2.87111,
+            "name": "Evening Run",
+            "date": "2026-08-06"
+          },
+          {
+            "lat": 53.20695,
+            "lng": -2.90206,
+            "name": "Parkrun 19",
+            "date": "2026-08-08"
+          },
+          {
+            "lat": 53.18484,
+            "lng": -2.89335,
+            "name": "CHSTR 13",
+            "date": "2026-08-10"
+          },
+          {
+            "lat": 53.18797,
+            "lng": -2.89654,
+            "name": "Evening Run",
+            "date": "2026-08-11"
+          }
+        ],
+        "ride": [
+          {
+            "lat": 52.0854,
+            "lng": -1.74764,
+            "name": "Stratford Greenway Bike Ride with Dad",
+            "date": "2026-03-08"
+          },
+          {
+            "lat": 51.35456,
+            "lng": -0.48476,
+            "name": "Hampton Court Bike Ride with Dad",
+            "date": "2026-03-28"
+          },
+          {
+            "lat": 50.76956,
+            "lng": 0.10563,
+            "name": "Race the Sun: South Downs - Cycle",
+            "date": "2026-04-25"
+          },
+          {
+            "lat": 52.20244,
+            "lng": -1.61659,
+            "name": "Stratford Greenway with Dad",
+            "date": "2026-06-21"
+          },
+          {
+            "lat": 53.18404,
+            "lng": -2.89638,
+            "name": "Night Ride",
+            "date": "2026-07-06"
+          }
+        ],
+        "hike": [
+          {
+            "lat": 53.13868,
+            "lng": -3.24651,
+            "name": "Moel Famau Hike",
+            "date": "2026-02-15"
+          },
+          {
+            "lat": 50.76589,
+            "lng": 0.10626,
+            "name": "Race the Sun: South Downs - Hike First Stage",
+            "date": "2026-04-25"
+          },
+          {
+            "lat": 50.77482,
+            "lng": 0.15281,
+            "name": "Race the Sun: South Downs - Hike Second Stage",
+            "date": "2026-04-25"
+          }
+        ]
+      },
+      "routesByBucket": {},
+      "regionsByBucket": {}
+    }
+  },
+  "availableYears": [
+    2026
+  ],
+  "currentYear": 2026
 }

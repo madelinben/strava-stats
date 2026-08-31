@@ -9,12 +9,15 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
-import { buildDashboard } from '../src/lib/stats';
+import { buildDashboard, buildYearBundle } from '../src/lib/stats';
+import { buildTrainingPlan, pickMilestone } from '../src/lib/trainingPlan';
 import type {
   ActivityEffortSource,
   StravaActivitySummary,
   StravaAthlete,
   StravaBestEffort,
+  TrackedEvent,
+  YearBundle,
 } from '../src/types';
 
 config();
@@ -22,7 +25,19 @@ config();
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_PATH = join(ROOT, 'public', 'data', 'dashboard.json');
 const VERSION_PATH = join(ROOT, 'public', 'data', 'version.json');
+const YEARS_DIR = join(ROOT, 'public', 'data', 'years');
+const EVENTS_PATH = join(ROOT, 'public', 'data', 'events.json');
 const ENV_PATH = join(ROOT, '.env');
+
+function isRunActivitySummary(a: StravaActivitySummary): boolean {
+  const t = a.sport_type ?? a.type;
+  return t === 'Run' || t === 'TrailRun' || t === 'VirtualRun';
+}
+
+function loadTrackedEvents(): TrackedEvent[] {
+  if (!existsSync(EVENTS_PATH)) return [];
+  return JSON.parse(readFileSync(EVENTS_PATH, 'utf8')) as TrackedEvent[];
+}
 
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID;
 const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
@@ -214,6 +229,122 @@ async function fetchRunBestEfforts(
   return sources;
 }
 
+function activityYear(a: { start_date_local: string }): number {
+  return Number(a.start_date_local.slice(0, 4));
+}
+
+/** Year archive path — git-tracked, unlike dashboard.json, so a closed year's
+ * numbers survive even if a future Strava fetch returns less history. */
+function yearArchivePath(year: number): string {
+  return join(YEARS_DIR, `${year}.json`);
+}
+
+/** Bump whenever YearBundle's shape changes — makes an archive written by an
+ * older version of this script get silently recomputed instead of shipped
+ * as-is (and crashing the SPA on the missing/renamed fields). */
+const ARCHIVE_SCHEMA_VERSION = 4;
+
+function loadArchive(archivePath: string): YearBundle | null {
+  if (!existsSync(archivePath)) return null;
+  try {
+    const parsed = JSON.parse(readFileSync(archivePath, 'utf8')) as YearBundle & {
+      schemaVersion?: number;
+    };
+    if (parsed.schemaVersion !== ARCHIVE_SCHEMA_VERSION) return null;
+    const { schemaVersion: _schemaVersion, ...bundle } = parsed;
+    return bundle;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Nominatim reverse geocoding — free, no API key, usage policy caps anonymous
+ * use at ~1 req/sec and requires an identifying User-Agent. Only called for
+ * years rebuilt this run (archived years keep the label they got when they
+ * were first built), so this stays well within that budget.
+ */
+const NOMINATIM_USER_AGENT =
+  'strava-stats-dashboard/1.0 (personal Strava dashboard; github.com/madelinben/strava-stats)';
+
+async function reverseGeocode(center: { lat: number; lng: number }): Promise<string> {
+  const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${center.lat}&lon=${center.lng}&zoom=10`;
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': NOMINATIM_USER_AGENT } });
+    if (!res.ok) return 'Unknown area';
+    const data = (await res.json()) as { address?: Record<string, string>; display_name?: string };
+    const a = data.address ?? {};
+    return a.city || a.town || a.village || a.county || data.display_name?.split(',')[0] || 'Unknown area';
+  } catch (e) {
+    console.warn(`Reverse geocode failed for ${center.lat},${center.lng}:`, e);
+    return 'Unknown area';
+  }
+}
+
+/** Fill in every region's blank label via reverse geocoding, rate-limited to
+ * respect Nominatim's usage policy. Mutates `bundle` in place. */
+async function labelBundleRegions(bundle: YearBundle): Promise<void> {
+  for (const regions of Object.values(bundle.regionsByBucket)) {
+    for (const region of regions) {
+      region.label = await reverseGeocode(region.center);
+      await sleep(1100);
+    }
+  }
+}
+
+/**
+ * Build (or reuse) each calendar year's stats bundle.
+ * Past years are cached to disk the first time they're computed and never
+ * recomputed after — only the current year is always rebuilt from the fresh
+ * Strava fetch.
+ */
+async function buildYears(
+  activities: StravaActivitySummary[],
+  effortSources: ActivityEffortSource[],
+  currentYear: number,
+): Promise<{ years: Record<string, YearBundle>; availableYears: number[] }> {
+  const activityYears = new Set(activities.map(activityYear));
+  activityYears.add(currentYear);
+  const availableYears = [...activityYears].sort((a, b) => a - b);
+
+  const years: Record<string, YearBundle> = {};
+  for (const year of availableYears) {
+    const archivePath = yearArchivePath(year);
+    const archived = year !== currentYear ? loadArchive(archivePath) : null;
+    if (archived) {
+      years[String(year)] = archived;
+      continue;
+    }
+
+    const yearActivities = activities.filter((a) => activityYear(a) === year);
+    const yearEffortSources = effortSources.filter(
+      (s) => Number(s.start_date_local.slice(0, 4)) === year,
+    );
+    const bundle = buildYearBundle(yearActivities, yearEffortSources);
+    console.log(`Labelling ${year} map regions…`);
+    await labelBundleRegions(bundle);
+    years[String(year)] = bundle;
+
+    if (year !== currentYear) {
+      mkdirSync(YEARS_DIR, { recursive: true });
+      writeFileSync(
+        archivePath,
+        `${JSON.stringify({ schemaVersion: ARCHIVE_SCHEMA_VERSION, ...bundle }, null, 2)}\n`,
+        'utf8',
+      );
+      console.log(`Archived ${year} → ${archivePath}`);
+    }
+  }
+
+  // "All time" — always recomputed fresh (never archived, since the current
+  // year's slice of it changes every sync).
+  years.all = buildYearBundle(activities, effortSources);
+  console.log('Labelling all-time map regions…');
+  await labelBundleRegions(years.all);
+
+  return { years, availableYears };
+}
+
 async function main(): Promise<void> {
   requireCreds();
   console.log('Refreshing Strava access token…');
@@ -231,7 +362,18 @@ async function main(): Promise<void> {
     activities,
   );
 
-  const dashboard = buildDashboard(athlete, activities, effortSources);
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const { years, availableYears } = await buildYears(activities, effortSources, currentYear);
+
+  const trackedEvents = loadTrackedEvents();
+  const milestone = pickMilestone(trackedEvents, now);
+  const longestRunKm = activities
+    .filter(isRunActivitySummary)
+    .reduce((max, a) => Math.max(max, a.distance / 1000), 0);
+  const plan = buildTrainingPlan(milestone, longestRunKm, now);
+
+  const dashboard = buildDashboard(athlete, activities, years, availableYears, currentYear, plan, now);
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   writeFileSync(OUT_PATH, JSON.stringify(dashboard, null, 2), 'utf8');
   // Cache buster for the SPA — PersistQueryClient uses this as `buster` so a
@@ -250,10 +392,11 @@ async function main(): Promise<void> {
   );
   console.log(`Wrote ${OUT_PATH}`);
   console.log(`Wrote ${VERSION_PATH} (cache buster ${dashboard.generatedAt})`);
+  const currentYearBundle = years[String(currentYear)];
   console.log(
-    `Summary: ${dashboard.summary.activities} activities · ${dashboard.summary.runDistanceKm} km run`,
+    `Summary (${currentYear}): ${currentYearBundle.summary.activities} activities · ${currentYearBundle.summary.runDistanceKm} km run`,
   );
-  for (const pb of dashboard.running.distancePbs) {
+  for (const pb of currentYearBundle.running.distancePbs) {
     console.log(`  ${pb.label}: ${pb.value} (${pb.pace})`);
   }
 }
