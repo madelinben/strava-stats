@@ -4,7 +4,7 @@ Two things live in this repo:
 
 | | Path | What |
 |---|---|---|
-| **Strava Stats app** (generic) | `src/`, `demo/` | Anyone connects **their own** Strava API app; all processing happens in the browser (no server, keys stay in local storage). Published at `madelinben.github.io/strava-stats/app/` and embedded in get-out-there as `@get-out-there/tool-strava` (`StravaApp`). |
+| **Strava Stats app** (generic) | `src/`, `demo/` | Anyone connects **their own** Strava API app; all processing happens in the browser (no server, keys stay in local storage). Published at `madelinben.github.io/strava-stats/app/` and embedded in get-out-there as `@get-out-there/strava` (`StravaApp`). |
 | **Owner dashboard** | `owner/` | The original personal dashboard (training plan, compliance, events) built from a daily GitHub Action sync. Published at the Pages root `madelinben.github.io/strava-stats/`. Setup instructions below. |
 
 ```bash
@@ -16,7 +16,7 @@ pnpm build:demo   # -> owner/dist/app (run after the owner build, see .github/wo
 
 Strava allows browser calls to its token and API endpoints (CORS `*`), so no proxy is needed. Create an API app at strava.com/settings/api and set its *Authorization Callback Domain* to the host serving the page (`madelinben.github.io`, `get-out-there.app`, or `localhost`).
 
-Sticker handoff: the activity list stores a `Handoff` JSON in `sessionStorage["gotc:sticker-handoff"]` for the sticker maker (`@get-out-there/tool-stickers`).
+Sticker handoff: the activity list stores a `Handoff` JSON in `sessionStorage["gotc:sticker-handoff"]` for the sticker maker (`@get-out-there/stickers`).
 
 ---
 
