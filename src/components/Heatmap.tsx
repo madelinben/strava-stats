@@ -6,9 +6,16 @@ const level = (km: number) => (km <= 0 ? 0 : km < 5 ? 1 : km < 10 ? 2 : km < 20 
 export function Heatmap({ heat, year }: { heat: Record<string, number>; year: number }) {
   const jan1 = new Date(Date.UTC(year, 0, 1));
   const offset = (jan1.getUTCDay() + 6) % 7; // Monday = 0
-  const days = Array.from({ length: 366 }, (_, i) => new Date(Date.UTC(year, 0, 1 + i))).filter((d) => d.getUTCFullYear() === year);
-  const cells: (string | null)[] = [...Array(offset).fill(null), ...days.map((d) => d.toISOString().slice(0, 10))];
-  const weeks = Array.from({ length: Math.ceil(cells.length / 7) }, (_, w) => cells.slice(w * 7, w * 7 + 7));
+  const days = Array.from({ length: 366 }, (_, i) => new Date(Date.UTC(year, 0, 1 + i))).filter(
+    (d) => d.getUTCFullYear() === year
+  );
+  const cells: (string | null)[] = [
+    ...Array(offset).fill(null),
+    ...days.map((d) => d.toISOString().slice(0, 10)),
+  ];
+  const weeks = Array.from({ length: Math.ceil(cells.length / 7) }, (_, w) =>
+    cells.slice(w * 7, w * 7 + 7)
+  );
 
   return (
     <div className="overflow-x-auto rounded-2xl bg-white p-3 shadow-sm ring-1 ring-slate-200">

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { hours, pace } from "./format.ts";
 import { decodePolyline } from "./polyline.ts";
-import { authorizeUrl, ensureFresh, type Activity, type Session } from "./strava.ts";
+import { type Activity, authorizeUrl, ensureFresh, type Session } from "./strava.ts";
 import { bucketOf, longestStreak, summarise, weekStart, yearsOf } from "./summary.ts";
 
 const act = (id: number, date: string, o: Partial<Activity> = {}): Activity => ({
@@ -30,7 +30,10 @@ test("weekStart is the Monday of that week", () => {
 });
 
 test("longestStreak counts consecutive days, ignoring duplicates", () => {
-  assert.equal(longestStreak(["2026-01-01", "2026-01-02", "2026-01-02", "2026-01-03", "2026-01-10"]), 3);
+  assert.equal(
+    longestStreak(["2026-01-01", "2026-01-02", "2026-01-02", "2026-01-03", "2026-01-10"]),
+    3
+  );
   assert.equal(longestStreak([]), 0);
 });
 
@@ -74,6 +77,13 @@ test("authorizeUrl carries scope, redirect and state", () => {
 });
 
 test("ensureFresh returns a still-valid session untouched (no network)", async () => {
-  const s: Session = { clientId: "1", clientSecret: "s", accessToken: "a", refreshToken: "r", expiresAt: 10_000, athleteName: "A" };
+  const s: Session = {
+    clientId: "1",
+    clientSecret: "s",
+    accessToken: "a",
+    refreshToken: "r",
+    expiresAt: 10_000,
+    athleteName: "A",
+  };
   assert.equal(await ensureFresh(s, 1000), s);
 });

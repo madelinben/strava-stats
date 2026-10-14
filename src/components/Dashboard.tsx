@@ -1,8 +1,8 @@
 import { LogOut, RefreshCw } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useActivities } from "../hooks/useActivities";
-import { summarise, yearsOf } from "../lib/summary";
 import type { Session } from "../lib/strava";
+import { summarise, yearsOf } from "../lib/summary";
 import { ActivityList } from "./ActivityList";
 import { Heatmap } from "./Heatmap";
 import { SummaryCards } from "./SummaryCards";
@@ -42,16 +42,27 @@ export function Dashboard({ session, onSession, onDisconnect, onSticker }: Dashb
           ))}
           <option value="all">All time</option>
         </select>
-        <button type="button" onClick={() => refetch()} aria-label="Refresh from Strava" className="grid size-11 place-items-center rounded-xl bg-slate-100 active:scale-[0.97]">
+        <button
+          type="button"
+          onClick={() => refetch()}
+          aria-label="Refresh from Strava"
+          className="grid size-11 place-items-center rounded-xl bg-slate-100 active:scale-[0.97]"
+        >
           <RefreshCw size={16} className={isFetching ? "animate-spin" : ""} />
         </button>
-        <button type="button" onClick={onDisconnect} className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-sm font-semibold text-rose-600 active:scale-[0.97]">
+        <button
+          type="button"
+          onClick={onDisconnect}
+          className="flex min-h-11 items-center gap-1 rounded-xl px-3 text-sm font-semibold text-rose-600 active:scale-[0.97]"
+        >
           <LogOut size={16} /> Disconnect
         </button>
       </header>
 
       {error && <p className="rounded-xl bg-rose-50 p-3 text-sm text-rose-700">{error.message}</p>}
-      {isFetching && !data && <p className="text-sm text-slate-500">Loading your activities from Strava…</p>}
+      {isFetching && !data && (
+        <p className="text-sm text-slate-500">Loading your activities from Strava…</p>
+      )}
 
       {data && (
         <>
@@ -59,7 +70,9 @@ export function Dashboard({ session, onSession, onDisconnect, onSticker }: Dashb
           <Heatmap heat={summary.heat} year={heatYear} />
           <WeeklyBars weekly={summary.weekly} />
           <section>
-            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Recent activities</h3>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Recent activities
+            </h3>
             <ActivityList activities={data.slice(0, 12)} onSticker={onSticker} />
           </section>
         </>
