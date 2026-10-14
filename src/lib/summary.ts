@@ -16,7 +16,8 @@ const BUCKET_OF: Record<string, Bucket> = {
   Hike: "hike",
 };
 
-export const bucketOf = (a: Pick<Activity, "type" | "sport_type">): Bucket => BUCKET_OF[a.sport_type ?? a.type] ?? "other";
+export const bucketOf = (a: Pick<Activity, "type" | "sport_type">): Bucket =>
+  BUCKET_OF[a.sport_type ?? a.type] ?? "other";
 
 export type Totals = { count: number; distanceM: number; movingS: number; elevM: number };
 const zero = (): Totals => ({ count: 0, distanceM: 0, movingS: 0, elevM: 0 });
@@ -89,7 +90,8 @@ export function summarise(all: Activity[], scope: number | "all", today: string)
     if (w) w.km += a.distance / 1000;
   }
 
-  const best = (key: (a: Activity) => number) => list.reduce<Activity | null>((m, a) => (!m || key(a) > key(m) ? a : m), null);
+  const best = (key: (a: Activity) => number) =>
+    list.reduce<Activity | null>((m, a) => (!m || key(a) > key(m) ? a : m), null);
   return {
     totals,
     byBucket,
@@ -101,4 +103,5 @@ export function summarise(all: Activity[], scope: number | "all", today: string)
   };
 }
 
-export const yearsOf = (all: Activity[]): number[] => [...new Set(all.map(year))].sort((a, b) => b - a);
+export const yearsOf = (all: Activity[]): number[] =>
+  [...new Set(all.map(year))].sort((a, b) => b - a);

@@ -4,7 +4,11 @@ const OAUTH = "https://www.strava.com/oauth";
 const API = "https://www.strava.com/api/v3";
 
 export type Credentials = { clientId: string; clientSecret: string };
-export type Tokens = { accessToken: string; refreshToken: string; /** epoch seconds */ expiresAt: number };
+export type Tokens = {
+  accessToken: string;
+  refreshToken: string /** epoch seconds */;
+  expiresAt: number;
+};
 export type Session = Credentials & Tokens & { athleteName: string };
 
 export type Activity = {
@@ -48,14 +52,28 @@ async function token(body: Record<string, string>): Promise<TokenResponse> {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(body),
   });
-  if (!res.ok) throw new Error(res.status === 401 ? "Strava rejected the Client ID / Secret" : `Strava token error (${res.status})`);
+  if (!res.ok)
+    throw new Error(
+      res.status === 401
+        ? "Strava rejected the Client ID / Secret"
+        : `Strava token error (${res.status})`
+    );
   return (await res.json()) as TokenResponse;
 }
 
-const toTokens = (t: TokenResponse): Tokens => ({ accessToken: t.access_token, refreshToken: t.refresh_token, expiresAt: t.expires_at });
+const toTokens = (t: TokenResponse): Tokens => ({
+  accessToken: t.access_token,
+  refreshToken: t.refresh_token,
+  expiresAt: t.expires_at,
+});
 
 export async function exchangeCode(creds: Credentials, code: string): Promise<Session> {
-  const t = await token({ client_id: creds.clientId, client_secret: creds.clientSecret, code, grant_type: "authorization_code" });
+  const t = await token({
+    client_id: creds.clientId,
+    client_secret: creds.clientSecret,
+    code,
+    grant_type: "authorization_code",
+  });
   const name = [t.athlete?.firstname, t.athlete?.lastname].filter(Boolean).join(" ");
   return { ...creds, ...toTokens(t), athleteName: name || "Athlete" };
 }
@@ -63,7 +81,12 @@ export async function exchangeCode(creds: Credentials, code: string): Promise<Se
 /** Returns the session unchanged while the access token is valid, otherwise a refreshed one. */
 export async function ensureFresh(s: Session, nowSec = Date.now() / 1000): Promise<Session> {
   if (s.expiresAt - 60 > nowSec) return s;
-  const t = await token({ client_id: s.clientId, client_secret: s.clientSecret, refresh_token: s.refreshToken, grant_type: "refresh_token" });
+  const t = await token({
+    client_id: s.clientId,
+    client_secret: s.clientSecret,
+    refresh_token: s.refreshToken,
+    grant_type: "refresh_token",
+  });
   return { ...s, ...toTokens(t) };
 }
 
@@ -77,7 +100,10 @@ async function api<T>(path: string, accessToken: string): Promise<T> {
 export async function fetchAllActivities(accessToken: string): Promise<Activity[]> {
   const all: Activity[] = [];
   for (let page = 1; page <= MAX_PAGES; page++) {
-    const batch = await api<Activity[]>(`/athlete/activities?per_page=${PER_PAGE}&page=${page}`, accessToken);
+    const batch = await api<Activity[]>(
+      `/athlete/activities?per_page=${PER_PAGE}&page=${page}`,
+      accessToken
+    );
     all.push(...batch);
     if (batch.length < PER_PAGE) break;
   }

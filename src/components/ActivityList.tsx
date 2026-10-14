@@ -1,5 +1,5 @@
 import { Sticker } from "lucide-react";
-import { km, hours, pace, shortDate } from "../lib/format";
+import { hours, km, pace, shortDate } from "../lib/format";
 import { HANDOFF_KEY, type Handoff } from "../lib/handoff";
 import { decodePolyline } from "../lib/polyline";
 import type { Activity } from "../lib/strava";
@@ -12,10 +12,27 @@ function Thumb({ encoded }: { encoded: string }) {
   const [xs, ys] = [xy.map((p) => p[0]), xy.map((p) => p[1])];
   const [minX, minY] = [Math.min(...xs), Math.min(...ys)];
   const span = Math.max(Math.max(...xs) - minX, Math.max(...ys) - minY) || 1e-9;
-  const d = xy.map(([x, y], i) => `${i ? "L" : "M"}${(2 + ((x - minX) / span) * 56).toFixed(1)},${(2 + ((y - minY) / span) * 56).toFixed(1)}`).join(" ");
+  const d = xy
+    .map(
+      ([x, y], i) =>
+        `${i ? "L" : "M"}${(2 + ((x - minX) / span) * 56).toFixed(1)},${(2 + ((y - minY) / span) * 56).toFixed(1)}`
+    )
+    .join(" ");
   return (
-    <svg viewBox="0 0 60 60" className="size-14 shrink-0 rounded-lg bg-slate-50" aria-hidden>
-      <path d={d} fill="none" stroke="#ea580c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 60 60"
+      className="size-14 shrink-0 rounded-lg bg-slate-50"
+      role="img"
+      aria-label="Route outline"
+    >
+      <path
+        d={d}
+        fill="none"
+        stroke="#ea580c"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -26,11 +43,22 @@ function toHandoff(a: Activity): Handoff {
     distanceM: a.distance,
     durationS: a.moving_time,
     elevGainM: a.total_elevation_gain,
-    points: decodePolyline(a.map?.summary_polyline ?? "").map(([lat, lon]) => ({ lat, lon, ele: null, time: null })),
+    points: decodePolyline(a.map?.summary_polyline ?? "").map(([lat, lon]) => ({
+      lat,
+      lon,
+      ele: null,
+      time: null,
+    })),
   };
 }
 
-export function ActivityList({ activities, onSticker }: { activities: Activity[]; onSticker: () => void }) {
+export function ActivityList({
+  activities,
+  onSticker,
+}: {
+  activities: Activity[];
+  onSticker: () => void;
+}) {
   function sticker(a: Activity) {
     try {
       sessionStorage.setItem(HANDOFF_KEY, JSON.stringify(toHandoff(a)));
@@ -41,12 +69,16 @@ export function ActivityList({ activities, onSticker }: { activities: Activity[]
   return (
     <ul className="flex flex-col gap-2">
       {activities.map((a) => (
-        <li key={a.id} className="flex items-center gap-3 rounded-2xl bg-white p-2 shadow-sm ring-1 ring-slate-200">
+        <li
+          key={a.id}
+          className="flex items-center gap-3 rounded-2xl bg-white p-2 shadow-sm ring-1 ring-slate-200"
+        >
           <Thumb encoded={a.map?.summary_polyline ?? ""} />
           <div className="min-w-0 flex-1">
             <div className="truncate font-bold text-slate-900">{a.name}</div>
             <div className="text-xs text-slate-500">
-              {shortDate(a.start_date_local)} · {km(a.distance)} · {hours(a.moving_time)} · {pace(a.average_speed)}
+              {shortDate(a.start_date_local)} · {km(a.distance)} · {hours(a.moving_time)} ·{" "}
+              {pace(a.average_speed)}
             </div>
           </div>
           <button

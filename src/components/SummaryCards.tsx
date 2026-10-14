@@ -13,9 +13,25 @@ export function SummaryCards({ s }: { s: Summary }) {
     { label: "Elevation", value: `${Math.round(s.totals.elevM).toLocaleString()} m` },
   ];
   const highlights = [
-    { Icon: Route, label: "Longest", value: s.longest ? `${km(s.longest.distance)} · ${shortDate(s.longest.start_date_local)}` : "—" },
-    { Icon: Mountain, label: "Biggest climb", value: s.biggestClimb ? `${Math.round(s.biggestClimb.total_elevation_gain)} m · ${shortDate(s.biggestClimb.start_date_local)}` : "—" },
-    { Icon: Flame, label: "Longest streak", value: `${s.streakDays} day${s.streakDays === 1 ? "" : "s"}` },
+    {
+      Icon: Route,
+      label: "Longest",
+      value: s.longest
+        ? `${km(s.longest.distance)} · ${shortDate(s.longest.start_date_local)}`
+        : "—",
+    },
+    {
+      Icon: Mountain,
+      label: "Biggest climb",
+      value: s.biggestClimb
+        ? `${Math.round(s.biggestClimb.total_elevation_gain)} m · ${shortDate(s.biggestClimb.start_date_local)}`
+        : "—",
+    },
+    {
+      Icon: Flame,
+      label: "Longest streak",
+      value: `${s.streakDays} day${s.streakDays === 1 ? "" : "s"}`,
+    },
   ];
   const sports = BUCKETS.filter((b) => s.byBucket[b].count > 0);
 
@@ -24,7 +40,9 @@ export function SummaryCards({ s }: { s: Summary }) {
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {cards.map((c) => (
           <div key={c.label} className={STAT}>
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">{c.label}</div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              {c.label}
+            </div>
             <div className="text-xl font-black tabular-nums text-slate-900">{c.value}</div>
           </div>
         ))}
@@ -34,7 +52,9 @@ export function SummaryCards({ s }: { s: Summary }) {
           <div key={label} className={`${STAT} flex items-center gap-3`}>
             <Icon size={20} className="shrink-0 text-orange-600" />
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                {label}
+              </div>
               <div className="text-sm font-bold text-slate-900">{value}</div>
             </div>
           </div>
@@ -42,7 +62,10 @@ export function SummaryCards({ s }: { s: Summary }) {
       </div>
       <div className="flex flex-wrap gap-2">
         {sports.map((b) => (
-          <span key={b} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold capitalize text-slate-700">
+          <span
+            key={b}
+            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold capitalize text-slate-700"
+          >
             {b} · {s.byBucket[b].count} · {km(s.byBucket[b].distanceM)}
           </span>
         ))}
