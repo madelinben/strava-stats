@@ -37,8 +37,11 @@ jobs:
         with:
           node-version: '22'
           cache: pnpm
+          cache-dependency-path: owner/pnpm-lock.yaml
 
-      - name: Install
+      # Owner dashboard (static snapshot of the repo owner's Strava data) lives in owner/
+      - name: Install (owner dashboard)
+        working-directory: owner
         run: pnpm install --frozen-lockfile
 
       - name: Require Strava secrets
@@ -58,10 +61,18 @@ jobs:
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
           SECRETS_PAT: ${{ secrets.SECRETS_PAT }}
+        working-directory: owner
         run: pnpm run sync
 
-      - name: Build
+      - name: Build owner dashboard
+        working-directory: owner
         run: pnpm run build
+
+      # Generic "connect your own Strava" app, published at /strava-stats/app/
+      - name: Install + build app
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm run build:demo
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -69,7 +80,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: owner/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
