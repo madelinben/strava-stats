@@ -1,38 +1,36 @@
 {
-  "name": "strava-stats",
+  "name": "@get-out-there/strava",
+  "version": "0.2.0",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
-  "packageManager": "pnpm@11.7.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "sync": "tsx scripts/sync.ts",
-    "auth": "tsx scripts/auth.ts",
-    "seed": "tsx scripts/seed.ts",
-    "parkruns:update": "tsx scripts/update-parkruns.ts",
-    "typecheck": "tsc -b --noEmit"
+  "description": "Strava stats dashboard using the user's own Strava API app, all in the browser. Embedded in get-out-there; demo also deployed to GitHub Pages.",
+  "exports": {
+    ".": "./src/index.ts"
   },
-  "dependencies": {
-    "@tanstack/query-sync-storage-persister": "^5.90.2",
-    "@tanstack/react-query": "^5.90.2",
-    "@tanstack/react-query-persist-client": "^5.90.2",
-    "leaflet": "^1.9.4",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-icons": "^5.7.0",
-    "react-leaflet": "^5.0.0"
+  "scripts": {
+    "dev": "vite --config demo/vite.config.ts",
+    "build:demo": "vite build --config demo/vite.config.ts",
+    "ts-check": "tsc --noEmit",
+    "test": "node --test src/lib/strava.test.ts"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "lucide-react": ">=0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.20",
-    "@types/node": "^24.3.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^5.0.2",
-    "dotenv": "^17.2.1",
-    "tsx": "^4.20.4",
-    "typescript": "~5.9.2",
-    "vite": "^7.1.3"
+    "@tailwindcss/vite": "^4.1.0",
+    "@tanstack/react-query": "^5.80.0",
+    "@types/node": "^20",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.0",
+    "vite": "^7.0.0"
   }
 }

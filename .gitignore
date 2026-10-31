@@ -12,10 +12,11 @@ dist-ssr/
 !.env.example
 
 # Generated dashboard snapshot + cache buster (CI regenerates each deploy)
-public/data/dashboard.json
-public/data/version.json
+owner/public/data/dashboard.json
+owner/public/data/version.json
 
 # Local prototype (reference only; not part of the SPA)
+owner/prototype/
 prototype/
 
 # Editor / OS
