@@ -1,8 +1,12 @@
-import { useMemo } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { ActivityLite, MapPoint, TrackedEvent } from '../types';
-import { computeBadges } from '../lib/badges';
+import { computeBadges, type Badge } from '../lib/badges';
 import { matchParkrunVisits, type ParkrunsData } from '../lib/parkrun';
+
+const BadgeExport = lazy(() =>
+  import('./export/BadgeExport').then((m) => ({ default: m.BadgeExport })),
+);
 
 async function fetchParkruns(): Promise<ParkrunsData> {
   const url = `${import.meta.env.BASE_URL}data/parkruns.json`;
@@ -31,6 +35,7 @@ export function AchievementBadges({
   events: TrackedEvent[];
   runPoints: MapPoint[];
 }) {
+  const [exporting, setExporting] = useState<Badge | null>(null);
   const { data } = useQuery({ queryKey: ['parkruns'], queryFn: fetchParkruns });
 
   const parkrun = useMemo(() => {
@@ -56,9 +61,24 @@ export function AchievementBadges({
             <BadgeIcon label={badge.label} color={badge.color} unlocked={badge.unlocked} />
             <div className="badge-label">{badge.label}</div>
             <div className="badge-note">{badge.unlocked ? (badge.earnedNote ?? 'Unlocked') : badge.description}</div>
+            {badge.unlocked ? (
+              <button
+                type="button"
+                className="export-trigger export-trigger-sm"
+                onClick={() => setExporting(badge)}
+                aria-label={`Download ${badge.label} badge sticker`}
+              >
+                Sticker
+              </button>
+            ) : null}
           </div>
         ))}
       </div>
+      {exporting ? (
+        <Suspense fallback={null}>
+          <BadgeExport badge={exporting} onClose={() => setExporting(null)} />
+        </Suspense>
+      ) : null}
     </section>
   );
 }

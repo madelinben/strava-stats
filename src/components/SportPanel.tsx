@@ -1,5 +1,6 @@
 import type { SportAggregate } from '../lib/sports';
 import { StatCard } from './StatCard';
+import { ExportRouteButton } from './export/RouteExportProvider';
 
 export function SportPanel({ label, aggregate }: { label: string; aggregate: SportAggregate }) {
   return (
@@ -21,6 +22,7 @@ export function SportPanel({ label, aggregate }: { label: string; aggregate: Spo
                 <th>Name</th>
                 <th>Distance</th>
                 <th>Time</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -30,6 +32,9 @@ export function SportPanel({ label, aggregate }: { label: string; aggregate: Spo
                   <td>{a.name}</td>
                   <td>{a.distanceKm} km</td>
                   <td>{a.movingTime}</td>
+                  <td>
+                    <ExportRouteButton activity={a} />
+                  </td>
                 </tr>
               ))}
             </tbody>

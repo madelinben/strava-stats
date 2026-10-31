@@ -1,6 +1,12 @@
+import { lazy, Suspense, useState } from 'react';
 import type { ActivityLite, TrackedEvent } from '../types';
 import { matchActivities, sportColorVar } from '../lib/events';
+import { ExportRouteButton } from './export/RouteExportProvider';
 import { formatDurationWithSeconds, formatPace, parseClockToSeconds } from '../lib/format';
+
+const EventResultExport = lazy(() =>
+  import('./export/EventResultExport').then((m) => ({ default: m.EventResultExport })),
+);
 
 function formatEventDate(iso: string): string {
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-GB', {
@@ -44,6 +50,7 @@ function EventCard({
   onRemove: () => void;
   onToggleMilestone: () => void;
 }) {
+  const [cardOpen, setCardOpen] = useState(false);
   const completed = isPast ? matchActivities(event, activityLog) : undefined;
   const stravaUrl = completed ? `https://www.strava.com/activities/${completed.primaryId}` : undefined;
 
@@ -117,6 +124,29 @@ function EventCard({
           <div className="event-overlay-sub event-description">{event.description}</div>
         ) : null}
 
+        {isPast && event.officialTime ? (
+          <span className="export-trigger-on-card-wrap">
+            <button
+              type="button"
+              className="export-trigger export-trigger-sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                setCardOpen(true);
+              }}
+            >
+              Result card
+            </button>
+          </span>
+        ) : null}
+        {completed && completed.activities.length === 1 ? (
+          <span className="export-trigger-on-card-wrap">
+            <ExportRouteButton
+              activity={completed.activities[0]}
+              extraStats={event.officialTime ? [{ label: 'Chip time', value: event.officialTime }] : undefined}
+            />
+          </span>
+        ) : null}
+
         {event.link ? (
           <a
             href={event.link}
@@ -140,6 +170,11 @@ function EventCard({
           </a>
         ) : null}
       </div>
+      {cardOpen ? (
+        <Suspense fallback={null}>
+          <EventResultExport event={event} onClose={() => setCardOpen(false)} />
+        </Suspense>
+      ) : null}
     </div>
   );
 }

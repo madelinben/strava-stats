@@ -25,44 +25,16 @@
     "officialResultsUrl": "https://results.resultsbase.net/myresults.aspx?uid=8-21093-12-49421"
   },
   {
-    "id": "caernarfon-half-2026",
-    "title": "Caernarfon Half Marathon",
-    "distanceKm": 21.1,
-    "activityType": "Run",
-    "date": "2026-09-06",
-    "link": "https://www.runwales.com/e/caernarfon-half-marathon-8668",
-    "imageUrl": "https://dh97sxltltum5.cloudfront.net/tenant_assets/tenant_id_535/757cc227-dfa0-471d-ba55-f26260c378ba.png",
-    "description": "Scenic half marathon starting and finishing beside Caernarfon Castle, North Wales."
-  },
-  {
-    "id": "autumn-cheshire-half-2026",
-    "title": "Autumn Cheshire Half Marathon",
-    "distanceKm": 21.1,
-    "activityType": "Run",
-    "date": "2026-09-13",
-    "link": "https://www.runthrough.co.uk/event/cheshire-autumn-half-marathon-2026",
-    "imageUrl": "https://cloudfront.runthrough.co.uk/uploads/public/media/images/GZpJLSs8XLQYHKKhRclqKhPAgEy2xpcG4JjgY6Tw/GZpJLSs8XLQYHKKhRclqKhPAgEy2xpcG4JjgY6Tw.jpg",
-    "description": "RunThrough closed rural-road half marathon from Capesthorne Hall, Macclesfield. Supports The Christie Charity."
-  },
-  {
     "id": "chester-zoo-run-for-nature-2026",
     "title": "Chester Zoo Run for Nature 10k",
     "distanceKm": 10,
     "activityType": "Run",
-    "date": "2026-09-20",
+    "date": "2026-09-27",
     "link": "https://www.chesterzoo.org/support-our-charity/fundraise/run-for-nature",
     "imageUrl": "https://www.chesterzoo.org/media/5effvoxz/zoorun-60.jpg?width=1920&quality=75",
-    "description": "Chester Zoo charity run through the zoo grounds; proceeds fund conservation work."
-  },
-  {
-    "id": "everton-10k-2026",
-    "title": "Everton 10k",
-    "distanceKm": 10,
-    "activityType": "Run",
-    "date": "2026-10-04",
-    "link": "https://www.everton10k.com/",
-    "imageUrl": "https://www.everton10k.com/wp-content/uploads/2025/03/EVERTON-10k-V4-01.png",
-    "description": "Chip-timed closed-road 10k starting and finishing at Everton FC's Hill Dickinson Stadium. Supports Everton in the Community."
+    "description": "Chester Zoo charity run through the zoo grounds; proceeds fund conservation work.",
+    "officialTime": "49:13",
+    "officialResultsUrl": "https://results.resultsbase.net/myresults.aspx?CId=8&RId=21255&EId=1&AId=13038"
   },
   {
     "id": "tatton-half-2026",

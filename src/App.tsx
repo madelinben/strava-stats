@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { DashboardData } from './types';
 import { Hero } from './components/Hero';
@@ -10,6 +10,12 @@ import { ComplianceCard } from './components/ComplianceCard';
 import { AlphabeteerFinder } from './components/AlphabeteerFinder';
 import { AchievementBadges } from './components/AchievementBadges';
 import { DevToolbar } from './components/DevToolbar';
+import { RouteExportProvider } from './components/export/RouteExportProvider';
+
+// Export UI + canvas renderers only load when someone opens a download dialog.
+const HeatmapExport = lazy(() =>
+  import('./components/export/HeatmapExport').then((m) => ({ default: m.HeatmapExport })),
+);
 import { StravaConnectButton } from './components/StravaConnectButton';
 import { UpcomingEventsCarousel, PastEventsCarousel } from './components/EventsCarousel';
 import { SportPanel } from './components/SportPanel';
@@ -63,6 +69,7 @@ export default function App() {
   const [tab, setTab] = useState('run');
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [allTime, setAllTime] = useState(false);
+  const [heatmapExportOpen, setHeatmapExportOpen] = useState(false);
   const { events, addEvent, removeEvent, toggleMilestone } = useEvents();
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['dashboard'],
@@ -143,7 +150,10 @@ export default function App() {
       ? eventRegions('triathlon', events, activityLog)
       : (activeYear.regionsByBucket[activeTab] ?? []);
 
+  const allRoutes = Object.values(data.years.all?.routesByBucket ?? {}).flat();
+
   return (
+    <RouteExportProvider routes={allRoutes}>
     <div className="wrap">
       <DevToolbar onAddEvent={addEvent} />
       <Hero athlete={data.athlete} plan={plan} summary={activeYear.summary} />
@@ -170,6 +180,9 @@ export default function App() {
             Intensity: lighter = 1 activity, darker = 2+ activities per day. Grey =
             no activity logged. Showing {data.years[String(year)]?.summary.dateRange ?? '—'}.
           </p>
+          <button type="button" className="export-trigger" onClick={() => setHeatmapExportOpen(true)}>
+            Download image
+          </button>
         </div>
       </section>
 
@@ -428,6 +441,19 @@ export default function App() {
         </div>
       ) : null}
 
+      {heatmapExportOpen ? (
+        <Suspense fallback={null}>
+          <HeatmapExport
+            years={(allTime ? data.availableYears : [year]).map((y) => ({
+              year: y,
+              days: data.years[String(y)]?.heatmap ?? [],
+            }))}
+            label={allTime ? 'all-time' : String(year)}
+            onClose={() => setHeatmapExportOpen(false)}
+          />
+        </Suspense>
+      ) : null}
+
       <footer>
         Strava dashboard generated from your activity history · {allTime ? 'All time' : year}
         : {activeYear.summary.activities} activities · {activeYear.summary.dateRange}
@@ -435,5 +461,6 @@ export default function App() {
         Snapshot updated {generated} · browser never calls Strava (daily sync only)
       </footer>
     </div>
+    </RouteExportProvider>
   );
 }

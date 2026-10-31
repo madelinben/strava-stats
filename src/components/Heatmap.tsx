@@ -2,97 +2,16 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ActivityLite, HeatDay } from '../types';
 import { bucketForSport } from '../lib/sports';
 import { sportIcon } from '../lib/sportIcons';
-
-const SPORT_COLORS: Record<string, string> = {
-  Run: '#10b981',
-  TrailRun: '#10b981',
-  VirtualRun: '#10b981',
-  Ride: '#3b82f6',
-  VirtualRide: '#3b82f6',
-  Walk: '#f97316',
-  Hike: '#a855f7',
-  Rowing: '#06b6d4',
-  Soccer: '#eab308',
-  Padel: '#ec4899',
-};
-const EMPTY_LIGHT = '#e3e5e9';
-const EMPTY_DARK = '#cdd1d8';
-
-interface Cell {
-  date: string;
-  count: number;
-  dominant: string | null;
-}
-
-/** Monday on/before Jan 1 of `year` — the grid always starts on a full week. */
-function gridStartDate(year: number): Date {
-  const startDate = new Date(year, 0, 1);
-  const dow = startDate.getDay();
-  const daysSinceMonday = (dow + 6) % 7;
-  startDate.setDate(startDate.getDate() - daysSinceMonday);
-  return startDate;
-}
-
-function buildWeeks(days: HeatDay[], year: number): Cell[][] {
-  const dateMap: Record<string, string[]> = {};
-  for (const d of days) {
-    if (!dateMap[d.date]) dateMap[d.date] = [];
-    dateMap[d.date].push(d.sport);
-  }
-
-  const weeks: Cell[][] = [];
-  const cur = new Date(gridStartDate(year));
-  for (let w = 0; w < 53; w++) {
-    const week: Cell[] = [];
-    for (let d = 0; d < 7; d++) {
-      const y = cur.getFullYear();
-      const m = String(cur.getMonth() + 1).padStart(2, '0');
-      const day = String(cur.getDate()).padStart(2, '0');
-      const dateStr = `${y}-${m}-${day}`;
-      const acts = dateMap[dateStr] || [];
-      let dominant: string | null = null;
-      if (acts.length) {
-        const counts: Record<string, number> = {};
-        for (const s of acts) counts[s] = (counts[s] || 0) + 1;
-        dominant = Object.keys(counts).reduce((a, b) =>
-          counts[a] > counts[b] ? a : b,
-        );
-      }
-      week.push({ date: dateStr, count: acts.length, dominant });
-      cur.setDate(cur.getDate() + 1);
-    }
-    weeks.push(week);
-  }
-  return weeks;
-}
-
-interface MonthLabel {
-  name: string;
-  startWeek: number;
-  spanWeeks: number;
-}
-
-/** One label per calendar month, spanning from the week column containing
- * that month's 1st through the week column containing its last day. */
-function buildMonthLabels(year: number): MonthLabel[] {
-  const start = gridStartDate(year);
-  const weekOf = (d: Date) =>
-    Math.floor((d.getTime() - start.getTime()) / (7 * 86400000));
-
-  const labels: MonthLabel[] = [];
-  for (let m = 0; m < 12; m++) {
-    const first = new Date(year, m, 1);
-    const last = new Date(year, m + 1, 0);
-    const startWeek = weekOf(first);
-    const endWeek = weekOf(last);
-    labels.push({
-      name: first.toLocaleDateString('en-GB', { month: 'short' }),
-      startWeek,
-      spanWeeks: endWeek - startWeek + 1,
-    });
-  }
-  return labels;
-}
+import { ExportRouteButton } from './export/RouteExportProvider';
+import {
+  EMPTY_DARK,
+  EMPTY_LIGHT,
+  SPORT_COLORS,
+  SPORT_LEGEND,
+  buildMonthLabels,
+  buildWeeks,
+  cellOpacity,
+} from '../lib/heatmapLayout';
 
 function todayIso(): string {
   const d = new Date();
@@ -133,6 +52,7 @@ function DayActivityRow({ activity }: { activity: ActivityLite }) {
           {activity.distanceKm} km · {activity.movingTime} · {activity.pace} /km
         </div>
       </div>
+      <ExportRouteButton activity={activity} />
     </div>
   );
 }
@@ -185,13 +105,7 @@ export function Heatmap({
   const svgHeight = 7 * (cellSize + gap) + 30 + monthRowHeight;
 
   const legendItems: [string, string][] = [
-    ['Run', SPORT_COLORS.Run],
-    ['Ride', SPORT_COLORS.Ride],
-    ['Walk', SPORT_COLORS.Walk],
-    ['Hike', SPORT_COLORS.Hike],
-    ['Rowing', SPORT_COLORS.Rowing],
-    ['Football', SPORT_COLORS.Soccer],
-    ['Padel', SPORT_COLORS.Padel],
+    ...SPORT_LEGEND.map(([label, sport]) => [label, SPORT_COLORS[sport]] as [string, string]),
     ['No activity', EMPTY_LIGHT],
   ];
 
@@ -235,8 +149,7 @@ export function Heatmap({
               const dayMonth = Number(day.date.slice(5, 7)) - 1;
               const emptyColor = dayMonth % 2 === 0 ? EMPTY_LIGHT : EMPTY_DARK;
               const color = day.dominant ? (SPORT_COLORS[day.dominant] ?? '#64748b') : emptyColor;
-              const opacity =
-                day.count === 0 ? 1 : day.count === 1 ? 0.6 : day.count === 2 ? 0.85 : 1;
+              const opacity = cellOpacity(day.count);
               const x = 34 + wi * (cellSize + gap);
               const y = baseY + di * (cellSize + gap);
               return (

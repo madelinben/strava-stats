@@ -27,6 +27,7 @@ const OUT_PATH = join(ROOT, 'public', 'data', 'dashboard.json');
 const VERSION_PATH = join(ROOT, 'public', 'data', 'version.json');
 const YEARS_DIR = join(ROOT, 'public', 'data', 'years');
 const EVENTS_PATH = join(ROOT, 'public', 'data', 'events.json');
+const STREAMS_DIR = join(ROOT, 'public', 'data', 'streams');
 const ENV_PATH = join(ROOT, '.env');
 
 function isRunActivitySummary(a: StravaActivitySummary): boolean {
@@ -48,6 +49,11 @@ const PER_PAGE = 100;
 const MAX_429_RETRIES = 3;
 /** Min run distance to bother fetching detail for best efforts (5k). */
 const MIN_EFFORT_DISTANCE_M = 5000;
+/** Stream fetches per sync — Strava allows 100 req/15 min (1000/day), and best
+ * efforts share that budget, so backfill happens over several syncs. */
+const MAX_STREAMS_PER_RUN = 60;
+/** Points kept per route; plenty for a smooth gradient on a phone-sized graphic. */
+const STREAM_POINTS = 200;
 
 function requireCreds(): void {
   if (!CLIENT_ID || !CLIENT_SECRET || !refreshToken) {
@@ -229,6 +235,77 @@ async function fetchRunBestEfforts(
   return sources;
 }
 
+function encodePolyline(points: [number, number][]): string {
+  let out = '';
+  let pLat = 0;
+  let pLng = 0;
+  const enc = (v: number) => {
+    let n = v < 0 ? ~(v << 1) : v << 1;
+    while (n >= 0x20) {
+      out += String.fromCharCode((0x20 | (n & 0x1f)) + 63);
+      n >>= 5;
+    }
+    out += String.fromCharCode(n + 63);
+  };
+  for (const [lat, lng] of points) {
+    const la = Math.round(lat * 1e5);
+    const ln = Math.round(lng * 1e5);
+    enc(la - pLat);
+    enc(ln - pLng);
+    pLat = la;
+    pLng = ln;
+  }
+  return out;
+}
+
+/**
+ * Per-activity GPS streams (speed + altitude along the route) for the
+ * single-route export's blue→red gradient. One small file per activity, loaded
+ * lazily by the SPA. Incremental: existing files are skipped, newest first,
+ * capped per run. An empty file marks "no GPS stream" so it isn't refetched.
+ */
+async function fetchRouteStreams(
+  accessToken: string,
+  activities: StravaActivitySummary[],
+): Promise<void> {
+  mkdirSync(STREAMS_DIR, { recursive: true });
+  const todo = activities
+    .filter((a) => a.map?.summary_polyline && !existsSync(join(STREAMS_DIR, `${a.id}.json`)))
+    .sort((a, b) => b.start_date.localeCompare(a.start_date))
+    .slice(0, MAX_STREAMS_PER_RUN);
+  console.log(`Fetching route streams for ${todo.length} activities…`);
+
+  for (const a of todo) {
+    const res = await stravaFetch(
+      `https://www.strava.com/api/v3/activities/${a.id}/streams?keys=latlng,velocity_smooth,altitude&key_by_type=true`,
+      accessToken,
+    );
+    const file = join(STREAMS_DIR, `${a.id}.json`);
+    if (res.status === 404) {
+      writeFileSync(file, '{"p":"","v":[],"a":[]}\n', 'utf8');
+    } else if (!res.ok) {
+      console.warn(`Skip streams ${a.id} (${res.status})`);
+    } else {
+      const body = (await res.json()) as Record<string, { data: unknown[] } | undefined>;
+      const latlng = (body.latlng?.data ?? []) as [number, number][];
+      const vel = (body.velocity_smooth?.data ?? []) as number[];
+      const alt = (body.altitude?.data ?? []) as number[];
+      const step = Math.max(1, Math.ceil(latlng.length / STREAM_POINTS));
+      const idx = latlng.map((_, i) => i).filter((i) => i % step === 0 || i === latlng.length - 1);
+      writeFileSync(
+        file,
+        `${JSON.stringify({
+          p: encodePolyline(idx.map((i) => latlng[i])),
+          v: idx.map((i) => Math.round((vel[i] ?? 0) * 10)),
+          a: idx.map((i) => Math.round(alt[i] ?? 0)),
+        })}\n`,
+        'utf8',
+      );
+    }
+    await sleep(200);
+  }
+}
+
 function activityYear(a: { start_date_local: string }): number {
   return Number(a.start_date_local.slice(0, 4));
 }
@@ -361,6 +438,8 @@ async function main(): Promise<void> {
     tokens.access_token,
     activities,
   );
+
+  await fetchRouteStreams(tokens.access_token, activities);
 
   const now = new Date();
   const currentYear = now.getFullYear();

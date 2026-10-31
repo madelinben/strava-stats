@@ -4,6 +4,7 @@ import type { MapPoint } from '../types';
 import {
   DEFAULT_LOCATION,
   LETTERS,
+  distanceKm,
   formatDistance,
   letterStatuses,
   matchParkrunVisits,
@@ -75,6 +76,18 @@ export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
     [visits, letter],
   );
 
+  // ponytail: linear scan of ~1k events, fine on every click
+  const nearestNew = useMemo(() => {
+    if (!data) return null;
+    let best: { letter: string; km: number } | null = null;
+    for (const e of data.events) {
+      if (statuses[e.letter] === 'done') continue;
+      const km = distanceKm(origin, e);
+      if (!best || km < best.km) best = { letter: e.letter, km };
+    }
+    return best;
+  }, [data, statuses, origin]);
+
   function useMyLocation() {
     if (!navigator.geolocation) {
       setLocationError('Geolocation is not supported in this browser.');
@@ -112,14 +125,25 @@ export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
             {data ? ` · ${data.region}` : ''}
           </p>
         </div>
-        <button
-          type="button"
-          className="btn-location"
-          onClick={useMyLocation}
-          disabled={locating}
-        >
-          {locating ? 'Locating…' : 'Use my location'}
-        </button>
+        <div className="alphabeteer-actions">
+          <button
+            type="button"
+            className="btn-location"
+            onClick={useMyLocation}
+            disabled={locating}
+          >
+            {locating ? 'Locating…' : 'Use my location'}
+          </button>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => nearestNew && setLetter(nearestNew.letter)}
+            disabled={!nearestNew}
+            title="Select the letter of the closest parkrun you haven't done a letter for yet"
+          >
+            Nearest new letter
+          </button>
+        </div>
       </div>
 
       <p className="alphabeteer-origin">

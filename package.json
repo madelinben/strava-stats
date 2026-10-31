@@ -18,7 +18,6 @@
     "@tanstack/query-sync-storage-persister": "^5.90.2",
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-persist-client": "^5.90.2",
-    "html2canvas": "^1.4.1",
     "leaflet": "^1.9.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
