@@ -169,11 +169,13 @@ export function visitsForLetter(
   const upper = letter.toUpperCase();
   const seen = new Set<string>();
   const out: ParkrunVisit[] = [];
-  for (const v of visits) {
+  // Alphabeteer credits first occurrence: oldest first, keep earliest visit per event.
+  const sorted = [...visits].sort((a, b) => a.date.localeCompare(b.date));
+  for (const v of sorted) {
     if (v.event.letter !== upper) continue;
     if (seen.has(v.event.slug)) continue;
     seen.add(v.event.slug);
     out.push(v);
   }
-  return out.sort((a, b) => b.date.localeCompare(a.date));
+  return out;
 }
