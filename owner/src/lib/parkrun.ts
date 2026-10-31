@@ -31,10 +31,10 @@ export interface ParkrunVisit {
 /** Green / red / yellow for Alphabeteer letter buttons. */
 export type LetterStatus = 'done' | 'todo' | 'abroad';
 
-/** Chester city centre — free offline fallback when geolocation is denied. */
+/** London — last-resort origin when nothing is saved and geolocation is denied. */
 export const DEFAULT_LOCATION: LatLng = {
-  lat: 53.1934,
-  lng: -2.891,
+  lat: 51.5072,
+  lng: -0.1276,
 };
 
 export const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -56,6 +56,17 @@ export function nearestForLetter(
     .map((e) => ({ ...e, distanceKm: distanceKm(origin, e) }))
     .sort((a, b) => a.distanceKm - b.distanceKm)
     .slice(0, limit);
+}
+
+/** Closest event across every letter not yet done; undefined when nothing is left. */
+export function nearestNewLetter(
+  events: ParkrunEvent[],
+  statuses: Record<string, LetterStatus>,
+  origin: LatLng,
+) {
+  return LETTERS.filter((l) => statuses[l] !== 'done')
+    .flatMap((l) => nearestForLetter(events, l, origin, 1))
+    .sort((a, b) => a.distanceKm - b.distanceKm)[0];
 }
 
 export function formatDistance(km: number): string {
