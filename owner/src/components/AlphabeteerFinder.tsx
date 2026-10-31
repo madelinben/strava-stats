@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useQuery } from '@tanstack/react-query';
 import type { MapPoint } from '../types';
 import {
@@ -8,6 +9,7 @@ import {
   letterStatuses,
   matchParkrunVisits,
   nearestForLetter,
+  nearestNewLetter,
   visitsForLetter,
   type LatLng,
   type LetterStatus,
@@ -22,6 +24,29 @@ async function fetchParkruns(): Promise<ParkrunsData> {
 }
 
 type LocationSource = 'default' | 'browser';
+
+const ORIGIN_KEY = 'parkrun-alphabeteer-origin';
+
+/** Saved "Use my location" result; null when never set or storage is blocked. */
+function loadOrigin(): LatLng | null {
+  try {
+    const raw = localStorage.getItem(ORIGIN_KEY);
+    return raw ? (JSON.parse(raw) as LatLng) : null;
+  } catch {
+    return null;
+  }
+}
+
+function currentPosition(): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) return reject(new Error('Geolocation is not supported in this browser.'));
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: false,
+      timeout: 10000,
+      maximumAge: 300000,
+    });
+  });
+}
 
 function statusClass(status: LetterStatus): string {
   switch (status) {
@@ -40,8 +65,13 @@ function statusClass(status: LetterStatus): string {
 
 export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
   const [letter, setLetter] = useState('C');
-  const [origin, setOrigin] = useState<LatLng>(DEFAULT_LOCATION);
-  const [locationSource, setLocationSource] = useState<LocationSource>('default');
+  // Location hierarchy: saved > browser (on click only) > London
+  const [saved] = useState(loadOrigin);
+  const [origin, setOrigin] = useState<LatLng>(saved ?? DEFAULT_LOCATION);
+  const [locationSource, setLocationSource] = useState<LocationSource>(
+    saved ? 'browser' : 'default',
+  );
+  const heading = useRef<HTMLHeadingElement>(null);
   const [locating, setLocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
 
@@ -75,30 +105,44 @@ export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
     [visits, letter],
   );
 
-  function useMyLocation() {
-    if (!navigator.geolocation) {
-      setLocationError('Geolocation is not supported in this browser.');
-      return;
-    }
+  /** Asks the browser and saves the result; resolves the current origin on failure. */
+  async function locate(): Promise<LatLng> {
     setLocating(true);
     setLocationError(null);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setOrigin({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setLocationSource('browser');
-        setLocating(false);
-      },
-      (err) => {
-        setLocating(false);
-        setLocationError(
-          err.code === err.PERMISSION_DENIED
-            ? 'Location permission denied — still using Chester fallback.'
-            : 'Could not read location — still using Chester fallback.',
-        );
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
-    );
+    try {
+      const pos = await currentPosition();
+      const next = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      setOrigin(next);
+      setLocationSource('browser');
+      try {
+        localStorage.setItem(ORIGIN_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    } catch (err) {
+      setLocationError(
+        err instanceof GeolocationPositionError && err.code === err.PERMISSION_DENIED
+          ? 'Location permission denied — using London instead.'
+          : err instanceof Error
+            ? err.message
+            : 'Could not read location — using London instead.',
+      );
+      return origin;
+    } finally {
+      setLocating(false);
+    }
   }
+
+  async function findNearest() {
+    if (!data) return;
+    const from = locationSource === 'browser' ? origin : await locate();
+    const next = nearestNewLetter(data.events, statuses, from);
+    if (!next) return;
+    // flushSync so focus lands on the heading after it shows the new letter
+    flushSync(() => setLetter(next.letter));
+    heading.current?.focus();
+  }
+
+  const allDone = !!data && !nearestNewLetter(data.events, statuses, origin);
 
   return (
     <div className="card alphabeteer">
@@ -112,18 +156,23 @@ export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
             {data ? ` · ${data.region}` : ''}
           </p>
         </div>
-        <button
-          type="button"
-          className="btn-location"
-          onClick={useMyLocation}
-          disabled={locating}
-        >
-          {locating ? 'Locating…' : 'Use my location'}
-        </button>
+        <div className="alphabeteer-actions">
+          <button
+            type="button"
+            className="btn-location"
+            onClick={findNearest}
+            disabled={!data || locating || allDone}
+          >
+            {allDone ? 'Every letter done' : 'Nearest new letter'}
+          </button>
+          <button type="button" className="btn-location" onClick={locate} disabled={locating}>
+            {locating ? 'Locating…' : 'Use my location'}
+          </button>
+        </div>
       </div>
 
       <p className="alphabeteer-origin">
-        {locationSource === 'browser' ? 'Your location' : 'Fallback · Chester'} ·{' '}
+        {locationSource === 'browser' ? 'Your location' : 'Fallback · London'} ·{' '}
         {origin.lat.toFixed(4)}, {origin.lng.toFixed(4)}
         {' · '}
         <strong>{doneCount}/26</strong> letters done
@@ -172,7 +221,7 @@ export function AlphabeteerFinder({ runPoints }: { runPoints: MapPoint[] }) {
       </div>
 
       <div className="alphabeteer-results">
-        <h3 className="alphabeteer-letter-heading">
+        <h3 className="alphabeteer-letter-heading" ref={heading} tabIndex={-1}>
           Letter <span>{letter}</span>
           {statuses[letter] === 'done' ? (
             <span className="status-pill status-met" style={{ marginLeft: 8 }}>

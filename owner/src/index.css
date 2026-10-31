@@ -568,6 +568,12 @@ footer {
   margin-bottom: 12px;
 }
 
+.alphabeteer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .btn-location {
   appearance: none;
   border: none;
